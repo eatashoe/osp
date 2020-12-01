@@ -33,6 +33,10 @@ body .desktop .nav .center {
   width: 100%;
   overflow: scroll;
 }
+body .desktop .nav .center ::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
 body .desktop .nav .center .tab {
   margin: 3px 10px 5px 10px;
   padding: 0px 2px 17px 2px;
@@ -537,67 +541,67 @@ body .startup .floor {
 }
 @keyframes flicker {
   0% {
-    opacity: 0.1375430917;
+    opacity: 0.1367301831;
   }
   5% {
-    opacity: 0.5126671755;
+    opacity: 0.4906765396;
   }
   10% {
-    opacity: 0.6378104702;
+    opacity: 0.2259705548;
   }
   15% {
-    opacity: 0.534523208;
+    opacity: 0.7697858221;
   }
   20% {
-    opacity: 0.2951450796;
+    opacity: 0.1446196855;
   }
   25% {
-    opacity: 0.296571676;
+    opacity: 0.6150272477;
   }
   30% {
-    opacity: 0.9674859009;
+    opacity: 0.3234819075;
   }
   35% {
-    opacity: 0.3409843347;
+    opacity: 0.2422718935;
   }
   40% {
-    opacity: 0.0701261391;
+    opacity: 0.4369213595;
   }
   45% {
-    opacity: 0.7492456406;
+    opacity: 0.0953877315;
   }
   50% {
-    opacity: 0.1547424242;
+    opacity: 0.0428770172;
   }
   55% {
-    opacity: 0.6634730331;
+    opacity: 0.0908507136;
   }
   60% {
-    opacity: 0.3537075318;
+    opacity: 0.723363953;
   }
   65% {
-    opacity: 0.5804050452;
+    opacity: 0.8434315294;
   }
   70% {
-    opacity: 0.430775121;
+    opacity: 0.3716075653;
   }
   75% {
-    opacity: 0.6086811279;
+    opacity: 0.3791384593;
   }
   80% {
-    opacity: 0.3915976964;
+    opacity: 0.1695809463;
   }
   85% {
-    opacity: 0.9245551914;
+    opacity: 0.4172313365;
   }
   90% {
-    opacity: 0.7260713807;
+    opacity: 0.5672991055;
   }
   95% {
-    opacity: 0.9220504432;
+    opacity: 0.8064153444;
   }
   100% {
-    opacity: 0.2392037403;
+    opacity: 0.562864877;
   }
 }
 @keyframes turn-on {

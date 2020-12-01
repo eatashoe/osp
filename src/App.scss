@@ -44,6 +44,10 @@ body{
 //                border-right: 2px black solid;
                 width: 100%;
                 overflow: scroll;
+                ::-webkit-scrollbar{
+                    width: 0;
+                    background: transparent;
+                }
                 .tab{
 //                    border: gray 1px solid;
 //                    border-radius: 2px;
