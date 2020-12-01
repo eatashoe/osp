@@ -425,7 +425,7 @@ function Tabs(props){
                 duration: 500
             });
             props.folder.current.style.opacity = '1';
-            props.folder.current.style.pointerEvents = '';
+            props.folder.current.style.pointerEvents = 'auto';
             props.setMinimize(false);
         }
     }

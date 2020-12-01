@@ -12,6 +12,7 @@ body .desktop {
   left: 1vmin;
   opacity: 0;
   pointer-events: none;
+  line-height: 1;
 }
 body .desktop .nav {
   height: 1.5em;
@@ -25,6 +26,7 @@ body .desktop .nav .left {
   float: left;
   display: flex;
   flex-direction: row;
+  width: 20%;
 }
 body .desktop .nav .center {
   display: flex;
@@ -50,6 +52,8 @@ body .desktop .nav .right {
 }
 body .desktop .nav .nav-item {
   padding: 5px 10px 5px 10px;
+  outline: none;
+  white-space: nowrap;
 }
 body .desktop .nav .nav-item:hover {
   color: white;
@@ -139,9 +143,12 @@ body .desktop .folder .handle .titleBox .btns .btn {
 body .desktop .folder .handle .titleBox .btns .btn.red {
   background: #FF605C;
   cursor: pointer;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
 }
 body .desktop .folder .handle .titleBox .btns .btn.red .close {
-  transform: scale(0.7) translateY(-7.5px);
+  transform: scale(0.7) translate(-0.1px, -6.6px);
   visibility: hidden;
   user-select: none;
   color: #1b1e23;
@@ -154,7 +161,7 @@ body .desktop .folder .handle .titleBox .btns .btn.yellow {
   cursor: pointer;
 }
 body .desktop .folder .handle .titleBox .btns .btn.yellow .minimize {
-  transform: scale(0.7) translateY(-7.7px);
+  transform: scale(0.7) translate(-0.2px, -6.5px);
   visibility: hidden;
   user-select: none;
   color: #1b1e23;
@@ -167,13 +174,13 @@ body .desktop .folder .handle .titleBox .btns .btn.green {
   cursor: pointer;
 }
 body .desktop .folder .handle .titleBox .btns .btn.green .expand {
-  transform: scale(0.7) translateY(-7.7px);
+  transform: scale(0.7) translate(-0.1px, -6.5px);
   visibility: hidden;
   user-select: none;
   color: #1b1e23;
 }
 body .desktop .folder .handle .titleBox .btns .btn.green .compress {
-  transform: scale(0.7) translateY(-7.7px);
+  transform: scale(0.7) translate(-0.1px, -6.5px);
   visibility: hidden;
   user-select: none;
   color: #1b1e23;
@@ -541,67 +548,67 @@ body .startup .floor {
 }
 @keyframes flicker {
   0% {
-    opacity: 0.1469415764;
+    opacity: 0.8605112285;
   }
   5% {
-    opacity: 0.2699149112;
+    opacity: 0.2980286156;
   }
   10% {
-    opacity: 0.1862900626;
+    opacity: 0.2631388695;
   }
   15% {
-    opacity: 0.3679074294;
+    opacity: 0.988029832;
   }
   20% {
-    opacity: 0.6150828511;
+    opacity: 0.5276555087;
   }
   25% {
-    opacity: 0.920118947;
+    opacity: 0.8414634078;
   }
   30% {
-    opacity: 0.5205446425;
+    opacity: 0.6520611004;
   }
   35% {
-    opacity: 0.2023330168;
+    opacity: 0.9367631219;
   }
   40% {
-    opacity: 0.3321596251;
+    opacity: 0.5933272684;
   }
   45% {
-    opacity: 0.4979916931;
+    opacity: 0.9138882839;
   }
   50% {
-    opacity: 0.6259997535;
+    opacity: 0.3435809807;
   }
   55% {
-    opacity: 0.0043015322;
+    opacity: 0.7978740271;
   }
   60% {
-    opacity: 0.458129206;
+    opacity: 0.8246184926;
   }
   65% {
-    opacity: 0.6049369769;
+    opacity: 0.9386261623;
   }
   70% {
-    opacity: 0.0835846639;
+    opacity: 0.2451096912;
   }
   75% {
-    opacity: 0.490735286;
+    opacity: 0.8936934668;
   }
   80% {
-    opacity: 0.3746679086;
+    opacity: 0.2736827863;
   }
   85% {
-    opacity: 0.4105757826;
+    opacity: 0.885757953;
   }
   90% {
-    opacity: 0.2749866771;
+    opacity: 0.6556646838;
   }
   95% {
-    opacity: 0.1714395306;
+    opacity: 0.8480270635;
   }
   100% {
-    opacity: 0.4737724163;
+    opacity: 0.9532000473;
   }
 }
 @keyframes turn-on {

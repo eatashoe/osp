@@ -15,7 +15,6 @@
 body{
     @extend %colors;
     .desktop{
-//        transform: scale(0.01);
         font-size: 16px;
         transition: opacity 1s;
         position: absolute;
@@ -24,6 +23,7 @@ body{
         left: 1vmin;
         opacity: 0;
         pointer-events: none;
+        line-height: 1;
         .nav{
             height: 1.5em;
             list-style-type: none;
@@ -35,6 +35,7 @@ body{
                 float:left;
                 display: flex;
                 flex-direction: row;
+                width: 20%;
             }
             .center{
                 display:flex;
@@ -66,6 +67,8 @@ body{
             }
             .nav-item{
                 padding: 5px 10px 5px 10px;
+                outline: none;
+                white-space: nowrap;
                 @include hover;
             }
         }
@@ -142,8 +145,11 @@ body{
                             &.red{
                                 background: #FF605C;
                                 cursor: pointer;
+                                display: table-cell;
+                                text-align: center;
+                                vertical-align: middle;
                                 .close{
-                                    transform: scale(0.7) translateY(-7.5px);
+                                    transform: scale(0.7) translate(-0.1px,-6.6px);
                                     visibility: hidden;
                                     user-select: none;
                                     color: #1b1e23;
@@ -156,7 +162,7 @@ body{
                                 background: #FFBD44;
                                 cursor: pointer;
                                 .minimize{
-                                    transform: scale(0.7) translateY(-7.7px);
+                                    transform: scale(0.7) translate(-0.2px,-6.5px);
                                     visibility: hidden;
                                     user-select: none;
                                     color: #1b1e23;
@@ -169,13 +175,13 @@ body{
                                 background: #00CA4E;
                                 cursor: pointer;
                                 .expand{
-                                    transform: scale(0.7) translateY(-7.7px);
+                                    transform: scale(0.7) translate(-0.1px,-6.5px);
                                     visibility: hidden;
                                     user-select: none;
                                     color: #1b1e23;
                                 }
                                 .compress{
-                                    transform: scale(0.7) translateY(-7.7px);
+                                    transform: scale(0.7) translate(-0.1px,-6.5px);
                                     visibility: hidden;
                                     user-select: none;
                                     color: #1b1e23;
