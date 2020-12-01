@@ -35,14 +35,11 @@ body{
                 float:left;
                 display: flex;
                 flex-direction: row;
-                width: 20%;
             }
             .center{
                 display:flex;
                 flex-direction: row;
                 float:right;
-//                border-left: 2px black solid;
-//                border-right: 2px black solid;
                 width: 100%;
                 overflow: none;
                 ::-webkit-scrollbar{
@@ -50,8 +47,6 @@ body{
                     background: transparent;
                 }
                 .tab{
-//                    border: gray 1px solid;
-//                    border-radius: 2px;
                     margin: 3px 10px 5px 10px;
                     padding: 0px 2px 17px 2px;
                     outline: none;
