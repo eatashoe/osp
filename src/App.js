@@ -536,15 +536,16 @@ function App() {
             filter.current.style.height= "105vh";
             filter.current.style.top= "0em";
             filter.current.style.left= "0em";
+            filter.current.style.visibility= 'hidden';
             desktop.current.style.opacity= '1';
             desktop.current.style.pointerEvents= 'auto';
-//            console.log(props.div.ref.current);
         }
         else{
             screen.current.style.top= '';
             screen.current.style.left= '';
             screen.current.style.width= "95%";
             screen.current.style.height= "90%";
+            filter.current.style.visibility= '';
             filter.current.style.width= "95%";
             filter.current.style.height= "85%";
             filter.current.style.top= "2em";
