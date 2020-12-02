@@ -484,8 +484,8 @@ const file = [
     {id:1, value: 'random.mp4'},
     {id:2, value: 'dog.png'},
     {id:3, value: 'pepe.jpeg'},
-    {id:4, value: <SDMenu className='submenu' name='folder' list={sub} y={72} x={22}/>},
-    {id:5, value: <SDMenu className='submenu' name='folder' list={sub} y={96} x={22}/>}
+    {id:4, value: <SDMenu className='submenu' name='folder' list={sub} y={65} x={23}/>},
+    {id:5, value: <SDMenu className='submenu' name='folder' list={sub} y={89} x={23}/>}
 ]
 
 
