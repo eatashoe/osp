@@ -8,11 +8,12 @@ body .desktop {
   transition: opacity 1s;
   position: absolute;
   width: 100vw;
+  height: 100vh;
   top: 1vmin;
   left: 1vmin;
   opacity: 0;
   pointer-events: none;
-  line-height: 1;
+  line-height: 1em;
 }
 body .desktop .nav {
   height: 1.5em;
@@ -26,23 +27,6 @@ body .desktop .nav .left {
   float: left;
   display: flex;
   flex-direction: row;
-}
-body .desktop .nav .center {
-  display: flex;
-  flex-direction: row;
-  float: right;
-  width: 100%;
-  overflow: none;
-}
-body .desktop .nav .center ::-webkit-scrollbar {
-  width: 0;
-  background: transparent;
-}
-body .desktop .nav .center .tab {
-  margin: 3px 10px 5px 10px;
-  padding: 0px 2px 17px 2px;
-  outline: none;
-  border: 1px solid black;
 }
 body .desktop .nav .right {
   float: right;
@@ -60,13 +44,56 @@ body .desktop .nav .nav-item:hover {
   cursor: pointer;
   user-select: none;
 }
+body .desktop .center {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  float: right;
+  width: 1.5em;
+  height: calc(100vh - 4.5em);
+  overflow: scroll;
+  pointer-events: none;
+  top: 3em;
+}
+body .desktop .center ::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+body .desktop .center .tab {
+  display: block;
+  font-size: 14px;
+  line-height: 1em;
+  margin: 10px 8px 10px 0px;
+  padding: 10px 0px 10px 0px;
+  outline: none;
+  border: 1px solid black;
+  border-bottom-right-radius: 0.75em;
+  border-top-right-radius: 0.75em;
+  text-align: center;
+  pointer-events: visible;
+  background-color: white;
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body .desktop .center .tab:hover {
+  margin: 10px 5px 10px 0px;
+  transition: margin ease 0.1s;
+}
+body .desktop .desktopSpace {
+  height: calc(100vh - 1.5em);
+  width: 100vw;
+  background: white;
+}
 body .desktop .rc-menu {
   position: absolute;
   list-style-type: none;
   padding: 0px;
   margin: 0px;
   border: solid black 1px;
-  z-index: 2;
+  z-index: 4;
 }
 body .desktop .rc-menu .menu-item {
   padding: 3px 20px 3px 3px;
@@ -87,14 +114,12 @@ body .desktop .rc-menu .rightclick-item:hover {
   user-select: none;
 }
 body .desktop .rightclickscreen {
-  height: 96.5vh;
+  height: 100%;
   width: 100%;
   position: absolute;
-  background: white;
+  background: transparent;
 }
 body .desktop .folder {
-  min-height: 30px;
-  min-width: 30px;
   width: 200px;
   height: 200px;
   border: 2px black solid;
@@ -105,6 +130,7 @@ body .desktop .folder {
   outline: none;
   transition: opacity ease 0.5s;
   pointer-events: none;
+  overflow: visible;
 }
 body .desktop .folder .handle {
   width: 100%;
@@ -127,6 +153,8 @@ body .desktop .folder .handle .titleBox .title {
   margin: 0 37.5%;
   overflow: hidden;
   color: grey;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 body .desktop .folder .handle .titleBox .btns {
   display: flex;
@@ -197,71 +225,85 @@ body .desktop .folder .handle .lines .line {
   margin-top: 1px;
   border-top: grey 1px solid;
 }
+body .desktop .folder .folderSpace {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  height: calc(100% - 24px);
+  background: white;
+}
 body .desktop .folder .resizers {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  z-index: 10;
 }
 body .desktop .folder .resizers .resizer {
   width: 1%;
   height: 1%;
   border: 3px solid transparent;
+  background: transparent;
   position: absolute;
 }
 body .desktop .folder .resizers .resizer.top-left {
   left: -5px;
   top: -5px;
   cursor: nwse-resize;
-  z-index: 1;
+  z-index: 2;
 }
 body .desktop .folder .resizers .resizer.top-right {
   right: -5px;
   top: -5px;
   cursor: nesw-resize;
-  z-index: 1;
+  z-index: 2;
 }
 body .desktop .folder .resizers .resizer.bottom-left {
   left: -5px;
   bottom: -5px;
   cursor: nesw-resize;
-  z-index: 1;
+  z-index: 2;
 }
 body .desktop .folder .resizers .resizer.bottom-right {
   right: -5px;
   bottom: -5px;
   cursor: nwse-resize;
-  z-index: 1;
+  z-index: 2;
 }
 body .desktop .folder .resizers .resizer.left {
   left: -5px;
   top: -3px;
   height: 100%;
   cursor: ew-resize;
+  z-index: 1;
 }
 body .desktop .folder .resizers .resizer.right {
   right: -5px;
   top: -3px;
   height: 100%;
   cursor: ew-resize;
+  z-index: 1;
 }
 body .desktop .folder .resizers .resizer.top {
-  left: -3px;
+  left: -1px;
   top: -5px;
   width: 100%;
   cursor: ns-resize;
+  z-index: 1;
 }
 body .desktop .folder .resizers .resizer.bottom {
-  left: -5px;
-  bottom: -5px;
+  left: -3px;
+  bottom: -7px;
   width: 100%;
   cursor: ns-resize;
+  z-index: 1;
 }
 body .desktop .desk-item {
-  width: 50px;
-  height: 60px;
+  height: 5em;
+  width: 5em;
   position: absolute;
   text-align: center;
   outline: none;
+  z-index: 2;
 }
 body .desktop .desk-item .item-icon {
   width: 100%;
@@ -269,19 +311,46 @@ body .desktop .desk-item .item-icon {
 }
 body .desktop .desk-item .item-icon i {
   color: pink;
-  margin: 17px;
+  margin: 16px;
   transform: scale(3);
 }
 body .desktop .desk-item .item-name {
-  margin-top: 0.3em;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  word-wrap: break-word;
+  margin-top: -0.4em;
   font-size: 0.9em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body .desktop .desk-item .item-inputBox {
+  min-height: auto;
+  padding: 0;
+}
+body .desktop .desk-item .item-inputBox .item-textarea {
+  padding: 0;
+  width: 100%;
+  height: auto;
+  resize: none;
+  border: none;
+  outline: none;
+  border: 1px black solid;
+  font-size: 0.9em;
+  text-align: center;
+  line-height: 1.15;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  transform: translate(-1px, -6px);
+}
+body .desktop .desk-item .rightclickscreen {
+  top: 0px;
 }
 body .startup {
   font-size: 1vmin;
   width: 100vw;
   height: 100vh;
   position: absolute;
-  background: radial-gradient(circle at 50% 40%, #ff819c 30%, #360167 100%);
   z-index: 0;
   overflow: hidden;
 }
@@ -469,7 +538,7 @@ body .startup .computer .bottom {
   left: 1.5em;
   border-bottom-left-radius: 2em;
   border-bottom-right-radius: 2em;
-  box-shadow: 0px 3.5em 2em -3em;
+  box-shadow: 0px 4em 4em -1.5em;
   z-index: -1;
 }
 body .startup .computer .bottom:before {
@@ -477,7 +546,7 @@ body .startup .computer .bottom:before {
   width: 2.3%;
   height: 100%;
   position: absolute;
-  background: linear-gradient(90deg, #d5d5b4 0%, #8e8e78 100%);
+  background: linear-gradient(180deg, #2f2f28 0%, #767664 50%, #a5a58c 80%);
   bottom: 0.1em;
   left: 0em;
   border-bottom-left-radius: 2em;
@@ -487,7 +556,7 @@ body .startup .computer .bottom:after {
   width: 2.3%;
   height: 100%;
   position: absolute;
-  background: linear-gradient(180deg, #2f2f28 0%, #767664 38%, #a5a58c 100%);
+  background: linear-gradient(180deg, #2f2f28 0%, #767664 50%, #a5a58c 80%);
   bottom: 0.1em;
   right: 0em;
   border-bottom-right-radius: 2em;
@@ -521,6 +590,7 @@ body .startup .computer .bottom .power-btn:active i {
   text-shadow: 0px 0em 4px #ff3838;
 }
 body .startup .floor {
+  visibility: hidden;
   width: 200%;
   height: 80%;
   position: absolute;
@@ -547,67 +617,86 @@ body .startup .floor {
 }
 @keyframes flicker {
   0% {
-    opacity: 0.0170221788;
+    opacity: 0.4303931509;
   }
   5% {
-    opacity: 0.7131665768;
+    opacity: 0.9172431504;
   }
   10% {
-    opacity: 0.3049696669;
+    opacity: 0.5624396852;
   }
   15% {
-    opacity: 0.8134527396;
+    opacity: 0.2919196601;
   }
   20% {
-    opacity: 0.0956402218;
+    opacity: 0.0414984413;
   }
   25% {
-    opacity: 0.8042187884;
+    opacity: 0.8122531845;
   }
   30% {
-    opacity: 0.5919983695;
+    opacity: 0.8642996662;
   }
   35% {
-    opacity: 0.4151064382;
+    opacity: 0.8502447358;
   }
   40% {
-    opacity: 0.5450500801;
+    opacity: 0.4080199509;
   }
   45% {
-    opacity: 0.0120296343;
+    opacity: 0.9639884565;
   }
   50% {
-    opacity: 0.514393454;
+    opacity: 0.2187714161;
   }
   55% {
-    opacity: 0.3534509962;
+    opacity: 0.5543197706;
   }
   60% {
-    opacity: 0.0984866325;
+    opacity: 0.1145487617;
   }
   65% {
-    opacity: 0.7908855124;
+    opacity: 0.2108517463;
   }
   70% {
-    opacity: 0.8613497092;
+    opacity: 0.1220042964;
   }
   75% {
-    opacity: 0.3769801215;
+    opacity: 0.9099452208;
   }
   80% {
-    opacity: 0.2195662876;
+    opacity: 0.0649728661;
   }
   85% {
-    opacity: 0.8091167917;
+    opacity: 0.9986000098;
   }
   90% {
-    opacity: 0.0697014214;
+    opacity: 0.6299898989;
   }
   95% {
-    opacity: 0.7970181792;
+    opacity: 0.9049662022;
   }
   100% {
-    opacity: 0.0645766022;
+    opacity: 0.8641683589;
+  }
+}
+@keyframes borderStop {
+  0% {
+    border: 1px red solid;
+  }
+  25% {
+    transform: translate(-3px, -6px);
+    border: 1px red solid;
+  }
+  50% {
+    transform: translate(6px, -6px);
+    border: 1px red solid;
+  }
+  75% {
+    transform: translate(-6px, -6px);
+  }
+  100% {
+    transform: translate(3px -6px);
   }
 }
 @keyframes turn-on {
@@ -689,6 +778,24 @@ body .startup .floor {
 
 .tabAnimate-exited {
   opacity: 0;
+}
+
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 500ms ease-in;
 }
 
 /*# sourceMappingURL=App.css.map */

@@ -19,11 +19,12 @@ body{
         transition: opacity 1s;
         position: absolute;
         width: 100vw;
+        height: 100vh;
         top:1vmin;
         left: 1vmin;
         opacity: 0;
         pointer-events: none;
-        line-height: 1;
+        line-height: 1em;
         .nav{
             height: 1.5em;
             list-style-type: none;
@@ -35,25 +36,6 @@ body{
                 float:left;
                 display: flex;
                 flex-direction: row;
-            }
-            .center{
-                display:flex;
-                flex-direction: row;
-                float:right;
-                width: 100%;
-                overflow: none;
-                ::-webkit-scrollbar{
-                    width: 0;
-                    background: transparent;
-                }
-                .tab{
-                    margin: 3px 10px 5px 10px;
-                    padding: 0px 2px 17px 2px;
-                    outline: none;
-                    border: 1px solid black;
-//                    background: black;
-//                    color: white;
-                }
             }
             .right{
                 float:right;
@@ -67,13 +49,82 @@ body{
                 @include hover;
             }
         }
+        .center{
+            position: absolute;
+            z-index: 5;
+            // border: red 1px solid;
+            display:flex;
+            flex-direction: column;
+            float:right;
+            width: 1.5em;
+            height: calc(100vh - 4.5em);
+            overflow: scroll;
+            pointer-events: none;
+            top:3em;
+            ::-webkit-scrollbar{
+                width: 0;
+                background: transparent;
+            }
+            .tab{
+                display: block;
+                font-size: 14px;
+                line-height: 1em;
+                margin: 10px 8px 10px 0px;
+                padding: 10px 0px 10px 0px;
+                outline: none;
+                border: 1px solid black;
+                border-bottom-right-radius: 0.75em;
+                border-top-right-radius: 0.75em;
+                text-align: center;
+                pointer-events: visible;
+                background-color: white;
+                writing-mode: vertical-rl;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                &:hover{
+                    margin: 10px 5px 10px 0px;
+                    transition: margin ease 0.1s;
+                }
+                // &:before{
+                //     position: absolute;
+                //     content: "";
+                //     border: black 1px solid;
+                //     border-top-color: transparent;
+                //     border-right-color: transparent;
+                //     border-bottom-left-radius: 4px;            
+                //     margin-top: -79%;
+                //     margin-right: 40%;
+                //     width: 0.5em;
+                //     height: 0.5em;
+                // }
+                // &:after{
+                //     position: absolute;
+                //     content: "";
+                //     border: red 1px solid;
+                //     border-right-color: transparent;
+                //     border-bottom-color: transparent;
+                //     border-top-left-radius: 4px;
+                //     // bottom: 100px;
+                //     // margin-bottom: -40%;
+                //     // margin-right: 40%;
+                //     width: 0.5em;
+                //     height: 0.5em;
+                // }
+            }
+        }
+        .desktopSpace{
+            height: calc(100vh - 1.5em);
+            width: 100vw;
+            background: white;
+        }
         .rc-menu{
             position: absolute;
             list-style-type: none;
             padding: 0px;
             margin: 0px;
             border: solid black 1px;
-            z-index: 2;
+            z-index: 4;
             @extend %colors;
             .menu-item{
                 padding: 3px 20px 3px 3px;
@@ -85,16 +136,17 @@ body{
             }
         }
         .rightclickscreen{
-            height: 96.5vh;
+            height: 100%;
             width: 100%;
             position: absolute;
-            background: white;
+            background: transparent;
+            // border: red solid 1px;
         }
         .folder{
-            min-height: 30px;
-            min-width: 30px;
-    //        max-height: fit-content;
-    //        max-width: fit-content;
+            // min-height: 30px;
+            // min-width: 30px;
+            // max-height: fit-content;
+            // max-width: fit-content;
             width: 200px;
             height: 200px;
             border: 2px black solid;
@@ -105,6 +157,7 @@ body{
             outline: none;
             transition: opacity ease 0.5s;
             pointer-events: none;
+            overflow: visible;
             .handle{
                 width: 100%;
                 height: 20px;
@@ -126,6 +179,8 @@ body{
                         overflow: hidden;
                         @extend %colors;
                         color:grey;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
                     }
                     .btns{
                         display: flex;
@@ -188,6 +243,7 @@ body{
                         }
                     }
                 }
+                
                 .lines{
                     width:100%;
                     margin-top: 3.2px;
@@ -199,100 +255,154 @@ body{
                     }
                 }
             }
+            .folderSpace{
+                position: absolute;
+                top: 20px;
+                width: 100%;
+                height: calc(100% - 24px);
+                // border: red 2px dashed;
+                background: white;
+            }
             .resizers{
                 width: 100%;
                 height: 100%;
                 box-sizing: border-box;
+                z-index: 10;
                 @extend %colors;
                 .resizer{
                     width: 1%;
                     height: 1%;
                     border: 3px solid transparent;
+                    background: transparent;
                     position: absolute;
                     &.top-left{
                         left: -5px;
                         top: -5px;
                         cursor: nwse-resize;
-                        z-index: 1;
+                        z-index: 2;
                     }
                     &.top-right{
                         right: -5px;
                         top: -5px;
                         cursor: nesw-resize;
-                        z-index: 1;
+                        z-index: 2;
                     }
                     &.bottom-left{
                         left: -5px;
                         bottom: -5px;
                         cursor: nesw-resize;
-                        z-index: 1;
+                        z-index: 2;
                     }
                     &.bottom-right{
                         right: -5px;
                         bottom: -5px;
                         cursor: nwse-resize;
-                        z-index: 1;
+                        z-index: 2;
                     }
                     &.left{
                         left: -5px;
                         top: -3px;
                         height: 100%;
                         cursor:ew-resize;
+                        z-index: 1;
                     }
                     &.right{
                         right: -5px;
                         top: -3px;
                         height: 100%;
                         cursor:ew-resize;
+                        z-index: 1;
                     }
                     &.top{
-                        left: -3px;
+                        left: -1px;
                         top: -5px;
                         width: 100%;
                         cursor:ns-resize;
+                        z-index: 1;
                     }
                     &.bottom{
-                        left: -5px;
-                        bottom: -5px;
+                        left: -3px;
+                        bottom: -7px;
                         width: 100%;
+                        // border: red 1px solid;
                         cursor:ns-resize;
+                        z-index: 1;
                     }
                 }
             }
         }
         .desk-item{
-            width: 50px;
-            height: 60px;
+            height: 5em;
+            width: 5em;
             position: absolute;
             text-align: center;
             outline: none;
+            z-index: 2;
+            // border: blue 1px solid;
+            // overflow:visible;
             .item-icon{
                 width: 100%;
                 height: 70%;
                 i{    
                     color: pink;
-                    margin: 17px;
+                    margin: 16px;
                     transform: scale(3);
                 }
             }
             .item-name{
-                margin-top: 0.3em;
+                width: 100%;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                // border: 1px red solid;
+                
+                word-wrap: break-word;
+                margin-top: -0.4em;
                 font-size: 0.9em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .item-inputBox{
+                min-height: auto;
+                padding: 0;
+                .item-textarea{
+                    padding: 0;
+                    width: 100%;
+                    height: auto;
+                    resize: none;
+                    border: none;
+                    outline: none;
+                    border: 1px black solid;
+                    font-size: 0.9em;
+                    text-align: center;
+                    line-height: 1.15;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                    sans-serif;
+                    transform:translate(-1px,-6px);
+                }
+            }
+            .rightclickscreen{
+                top: 0px;
             }
         }
     }
     .startup{
+//        visibility: hidden;
 //        filter: sepia(100%) hue-rotate(190deg) saturate(500%);
+//        filter:brightness(55%);
         font-size: 1vmin;
         width: 100vw;
         height: 100vh;
         position: absolute;
 //        background: linear-gradient(180deg, #360167 0%, #ff819c 45%);
-        background: radial-gradient(circle at 50% 40%, #ff819c 30%, #360167 100%);
+//        background: radial-gradient(circle at 50% 40%, #ff819c 30%, #360167 100%);
+//        background: radial-gradient(circle at 50% 40%, #4b4b4b 0%, #1e1922 100%);
+//        background: linear-gradient(180deg, #ffffff 60%, rgba(189,189,160,1) 100%);
         z-index: 0;
         overflow: hidden;
-//        visibility: hidden;
         .computer{           
+//            filter:brightness(35%);
             transition: width 0.5s, height 0.5s;
             position: absolute;
             width: 66em;
@@ -356,7 +466,8 @@ body{
                         width: 95%;
                         height: 90%;
                         position: absolute;
-                        background:black;
+//                        background: radial-gradient(ellipse, #383838 69%, #1c1c1c 100%);
+                        background: black;
                         border-radius: 3em;
                         top: 1.2em;
                         left: 1.2em;
@@ -374,6 +485,7 @@ body{
                             animation-fill-mode: forwards;
                         }
                         .filter{
+//                            visibility: hidden;
                             background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
                             position: absolute;
                             background-size: 100% 2px, 3px 100%;
@@ -482,14 +594,15 @@ body{
                 left: 1.5em;
                 border-bottom-left-radius: 2em;
                 border-bottom-right-radius: 2em;
-                box-shadow: 0px 3.5em 2em -3em;
+                box-shadow: 0px 4em 4em -1.5em;
                 z-index: -1;
                 &:before{
                     content: '';
                     width: 2.3%;
                     height: 100%;
                     position: absolute;
-                    background: linear-gradient(90deg, #d5d5b4 0%, #8e8e78 100%);
+//                    background: linear-gradient(90deg, #d5d5b4 0%, #8e8e78 100%);
+                    background: linear-gradient(180deg, #2f2f28 0%, #767664 50%, #a5a58c 80%);
                     bottom: 0.1em;
                     left: 0em;
                     border-bottom-left-radius: 2em;
@@ -500,7 +613,8 @@ body{
                     height: 100%;
                     position: absolute;
 //                    background: linear-gradient(90deg, #8e8e78 0%, #d5d5b4 100%);
-                    background:linear-gradient(180deg, #2f2f28 0%, #767664 38%, #a5a58c 100%);
+//                    background:linear-gradient(180deg, #2f2f28 0%, #767664 38%, #a5a58c 100%);
+                    background: linear-gradient(180deg, #2f2f28 0%, #767664 50%, #a5a58c 80%);
                     bottom: 0.1em;
                     right: 0em;
                     border-bottom-right-radius: 2em;
@@ -541,6 +655,7 @@ body{
             }
         }
         .floor{
+            visibility: hidden;
             width: 200%;
             height: 80%;
             position: absolute;
@@ -571,7 +686,15 @@ body{
     }
   }
 }
-
+@keyframes borderStop{
+    0%{border: 1px red solid}
+    25%{transform: translate(-3px, -6px);
+        border: 1px red solid}
+    50%{transform: translate(6px, -6px);
+        border: 1px red solid}
+    75%{transform: translate(-6px, -6px)}
+    100%{transform: translate(3px -6px)}
+}
 @keyframes turn-on{
   0%{
     box-shadow: none;
@@ -653,3 +776,23 @@ body{
 .tabAnimate-exited {
     opacity: 0;
 }
+
+.example-enter {
+    opacity: 0.01;
+  }
+  
+.example-enter.example-enter-active {
+opacity: 1;
+transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+opacity: 1;
+}
+
+.example-leave.example-leave-active {
+opacity: 0.01;
+transition: opacity 500ms ease-in;
+}
+
+
