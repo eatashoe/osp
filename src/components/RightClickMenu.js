@@ -1,16 +1,16 @@
 import React from "react";
 import {MenuItem, ControlledMenu} from "@szhsin/react-menu";
-import {useGlobalDelete, useGlobalDeskItem, useGlobalFolder, useGlobalFolderId} from "./GlobalStates";
+import {useGlobalDelete, useDarkMode} from "./GlobalStates";
 import DeskItem from "./DeskItem";
+
 
 const RightClickMenu = (props) => {
     const globalDelete = useGlobalDelete();
-    const globalDeskItem = useGlobalDeskItem();
-    const globalFolders = useGlobalFolder();
+    const darkMode = useDarkMode();
     const [isOpen, setOpen] = React.useState(false);
     const [anchorPoint, setAnchorPoint] = React.useState({ x: 0, y: 0 });
 
-    function addNewFolder(folder){
+    function addNewFolder(){
         // console.log(anchorPoint);
         // console.log("FOLDER"+props.x+","+props.y);
         // console.log('how', props.files)
@@ -28,17 +28,16 @@ const RightClickMenu = (props) => {
             title += ' ('+count+')'
         }
 
-        props.addKids(<DeskItem newFolder={true} isFolder={true} center={props.center} title={title} x={anchorPoint.x-props.x-5} y={anchorPoint.y-props.y-20} desktopRef={props.desktopRef}/>);
+        props.addKids(<DeskItem 
+                        newFolder={true} 
+                        isFolder={true} 
+                        center={props.center} 
+                        title={title} 
+                        x={anchorPoint.x-props.x-5} 
+                        y={anchorPoint.y-props.y-20} 
+                        desktopRef={props.desktopRef}/>);
     
         // props.files.concat(<DeskItem isFolder={true} center={props.center} title={'Folder'} x={e.pageX} y={e.pageY} desktopRef={props.desktopRef}/>);
-    }
-
-    function copyFolder(){
-        console.log(globalDeskItem.get()[0]);
-    }
-
-    function pasteFolder(){
-        addNewFolder(globalDeskItem.get()[0]);
     }
     
     function renameFolder(){
@@ -62,17 +61,18 @@ const RightClickMenu = (props) => {
 
     let menuItems = []
     if(props.folder){
-        menuItems=[<MenuItem className='rightclick-item'>Paste</MenuItem>,
+        menuItems=[<MenuItem className='rightclick-item'>Spaceholder</MenuItem>,
                     <MenuItem onClick={addNewFolder} className='rightclick-item'>New Folder</MenuItem>]
     }
     else if(props.deskItem){
-        menuItems=[<MenuItem className='rightclick-item'>Copy</MenuItem>,
+        menuItems=[<MenuItem className='rightclick-item'>Info</MenuItem>,
                     <MenuItem onClick={removeFolder}className='rightclick-item'>Delete</MenuItem>,
                     <MenuItem onClick={renameFolder} className='rightclick-item'>Rename</MenuItem>]
     }
     // onMouseEnter={props.deskItem ? hoverHandler(true) : null} onMouseLeave={props.deskItem ? hoverHandler(false) : null}
     return (
-        <div ref={props.nodeRef ? props.nodeRef : props.rc}  className="rightclickscreen"
+        <div ref={props.nodeRef ? props.nodeRef : props.rc}  
+            className={(darkMode.get() && props.nodeRef)? "rightclickscreen darkmode" : "rightclickscreen"}
         onContextMenu={e => {
             e.preventDefault();
             setAnchorPoint({ x: e.clientX + 0.7, y: e.clientY + 0 });

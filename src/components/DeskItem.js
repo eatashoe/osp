@@ -3,7 +3,7 @@ import Draggable from 'react-draggable';
 import InputBox from "./InputBox";
 import Folder from "./Folder";
 import RightClickMenu from "./RightClickMenu";
-import {useGlobalDelete,useGlobalFolder,useGlobalFolderId,useGlobalCopy} from "./GlobalStates"
+import {useGlobalDelete,useGlobalFolder,useGlobalFolderId, useDarkMode} from "./GlobalStates"
 
 const DeskItem = (props) =>{
     // const [desktopRef, setDesktopRef] = React.useState(null);
@@ -17,8 +17,8 @@ const DeskItem = (props) =>{
 
     const globalDeleted = useGlobalDelete();
     const globalFolders = useGlobalFolder();
-    const globalCopy = useGlobalCopy();
     const globalFolderId = useGlobalFolderId();
+    const darkMode = useDarkMode();
     
     const [isClose, setClose] = React.useState(false);
     const [isOpen, setOpen] = React.useState(false);
@@ -49,7 +49,6 @@ const DeskItem = (props) =>{
         globalFolders.set(globalFolders => ({...globalFolders, [globalFolderId.get()]: folder}))
         globalDeleted.set(globalDeleted => ({...globalDeleted, [globalFolderId.get()]: false}))
         globalFolderId.set(globalFolderId => globalFolderId + 1)
-        globalCopy.set(null);
     }, [])
 
     //tab stuff
@@ -90,7 +89,12 @@ const DeskItem = (props) =>{
     // }
 
     function hoverIn(){
-        deskitem.current.style.border = "rgb(0,0,0,0.5) 1px dotted";
+        if(darkMode.get()){
+            deskitem.current.style.border = "rgb(255,255,255) 1px dotted";
+        }
+        else{
+            deskitem.current.style.border = "rgb(0,0,0,0.5) 1px dotted";
+        }
     }
     function hoverOut(){
         deskitem.current.style.border = "transparent 1px dotted";
@@ -151,7 +155,12 @@ const DeskItem = (props) =>{
             icon.current.style.filter= 'sepia(100%) hue-rotate(190deg) saturate(500%)';
             name.current.style.transform= 'translateX(-1px)'
             name.current.style.filter= 'sepia(100%) hue-rotate(190deg) saturate(500%)';
-            name.current.style.border= 'dotted 1px black';
+            if(darkMode.get()){
+                name.current.style.border= 'dotted 1px white';
+            }
+            else{
+                name.current.style.border= 'dotted 1px black';
+            }
             name.current.style.background= '#0080cb';
             name.current.style.display='block';
 
@@ -181,7 +190,15 @@ const DeskItem = (props) =>{
     }
     if(props.isDesk){
         return(
-            <Folder desktopSpace={props.desktopSpace} id={id} addKids={addKids} center={props.center} desktopRef={props.desktopRef} children={children} isDesk={props.isDesk} nodeRef={folder}></Folder>
+            <Folder 
+                desktopSpace={props.desktopSpace} 
+                id={id} 
+                addKids={addKids} 
+                center={props.center} 
+                desktopRef={props.desktopRef} 
+                children={children} 
+                isDesk={props.isDesk} 
+                nodeRef={folder}></Folder>
         )
     }
     else if(!globalDeleted.get()[id]){
@@ -193,17 +210,53 @@ const DeskItem = (props) =>{
                             <i className={props.isFolder ? "fas fa-folder" : "fas fa-file"}></i>
                     </div>
                         {!rename ? 
-                        <div ref={name} className="item-name" onDoubleClick={e => {console.log('yo')}}>
+                        <div ref={name} className={darkMode.get() ? "item-name darkmode" : "item-name"} onDoubleClick={e => {console.log('yo')}}>
                             <span>{title}</span>
                         </div> 
                         :
-                        <InputBox deskitem={deskitem} input={input} title={title} renameFolder={renameFolder} ></InputBox>}
-                        <RightClickMenu id={id} title={title} deskItem={true} rc={rcRef} setRename={setRename} files={children}></RightClickMenu>
+                        <InputBox 
+                            deskitem={deskitem} 
+                            input={input} 
+                            title={title} 
+                            renameFolder={renameFolder}>
+                        </InputBox>}
+                        <RightClickMenu 
+                            id={id} 
+                            title={title} 
+                            deskItem={true} 
+                            rc={rcRef} 
+                            setRename={setRename} 
+                            files={children}>
+                        </RightClickMenu>
                     </div>
                     
                 </Draggable>
 
-                <Folder id={id} rcRef={rcRef} isOpen={isOpen} id={props.id} addKids={addKids} isFile={props.isFile} isFolder={props.isFolder} center={props.center} nodeRef={folder} isClose={isClose} setClose={setClose} isMinimized={isMinimized} setMinimize={setMinimize} title={title} tab={tab} titleRef={titleRef} focus={focus} setFocus={setFocus} mx={mx} setMx={setMx} my={my} setMy={setMy} children={children} desktopRef={props.desktopRef}/>
+                <Folder 
+                    id={id} 
+                    rcRef={rcRef} 
+                    isOpen={isOpen} 
+                    id={props.id} 
+                    addKids={addKids} 
+                    isFile={props.isFile} 
+                    isFolder={props.isFolder} 
+                    center={props.center} 
+                    nodeRef={folder} 
+                    isClose={isClose} 
+                    setClose={setClose} 
+                    isMinimized={isMinimized} 
+                    setMinimize={setMinimize} 
+                    title={title} 
+                    tab={tab} 
+                    titleRef={titleRef} 
+                    focus={focus} 
+                    setFocus={setFocus} 
+                    mx={mx} 
+                    setMx={setMx} 
+                    my={my} 
+                    setMy={setMy} 
+                    children={children} 
+                    desktopRef={props.desktopRef}/>
 
             </React.Fragment>
         );

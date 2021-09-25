@@ -2,7 +2,7 @@ import React from "react";
 import Clock from "./Clock";
 import DeskItem from "./DeskItem";
 import {Menu, MenuItem, SubMenu} from "@szhsin/react-menu";
-import {useGlobalDeskItem} from "./GlobalStates"
+import {useDarkMode} from "./GlobalStates";
 
 const Desktop = ({desktop, turnOn}) => {
     const desktopSpace = React.useRef(null);
@@ -11,14 +11,22 @@ const Desktop = ({desktop, turnOn}) => {
     const [tabs, setTabs] = React.useState(null);
     const [folder, setFolders] = React.useState(null);
 
-    const globalDeskItem = useGlobalDeskItem();
+    const darkMode = useDarkMode();
+
+    function setDarkMode(){
+        if(darkMode.get()){
+            darkMode.set(false);
+            localStorage.setItem("darkmode", false);
+        }
+        else{
+            darkMode.set(true);
+            localStorage.setItem("darkmode", true);
+        }
+    }
 
     React.useEffect(() => {
         setTabs(center);
         setFolders(desktopSpace);
-
-        globalDeskItem.set(deskItem => ([...deskItem, ...deskStuff]));
-        globalDeskItem.set(deskItem => ([...deskItem, ...folder1Stuff]));
     },[]);
     
     const sub = [
@@ -45,21 +53,22 @@ const Desktop = ({desktop, turnOn}) => {
                         </SubMenu>}
     ]
 
-    const folder1Stuff = [<DeskItem id={4}  isFolder={true} center={tabs} desktopRef={folder} title={'Folder1'} x={20} y={20} children={[]}/>,
-    <DeskItem id={5} isFolder={true} center={tabs} desktopRef={folder} title={'Folder2'} x={100} y={20} children={[]}/>]
+    const folder1Stuff = [
+        <DeskItem id={4}  isFolder={true} center={tabs} desktopRef={folder} title={'Folder1'} x={20} y={20} children={[]}/>,
+        <DeskItem id={5} isFolder={true} center={tabs} desktopRef={folder} title={'Folder2'} x={100} y={20} children={[]}/>]
 
     const deskStuff = [
-    <DeskItem id={1} isFolder={true} center={tabs} title={'Folder'} x={20} y={20} children={folder1Stuff} desktopRef={folder}/>,
-    <DeskItem id={2} isFolder={true} center={tabs} title={'hOmEWoRkforfuntodayyouknow'} x={100} y={20} desktopRef={folder}/>,
-    <DeskItem id={3} isFile={true} center={tabs} title={'website for me by me yo'} x={180} y={20} desktopRef={folder}/> 
+        <DeskItem id={1} isFolder={true} center={tabs} title={'Folder'} x={20} y={20} children={folder1Stuff} desktopRef={folder}/>,
+        <DeskItem id={2} isFolder={true} center={tabs} title={'hOmEWoRkforfuntodayyouknow'} x={100} y={20} desktopRef={folder}/>,
+        <DeskItem id={3} isFile={true} center={tabs} title={'website for me by me yo'} x={180} y={20} desktopRef={folder}/> 
     ]
 
     return(
         <div ref={desktop} className="desktop">
-            <nav className="nav">
+            <nav className={darkMode.get() ? "nav darkmode" : "nav"}>
                 <div className="left">
                     <Menu 
-                        menuButton={<div className="nav-item">
+                        menuButton={<div className={darkMode.get() ? "nav-item darkmode" : "nav-item"}>
                                         <i className="fas fa-lemon"></i>
                                     </div>} 
                         align='end' 
@@ -70,7 +79,7 @@ const Desktop = ({desktop, turnOn}) => {
                         <MenuItem key={2} onClick={turnOn}className='menu-item'>Shutdown</MenuItem>
                     </Menu>
                     <Menu 
-                        menuButton={<div className="nav-item">File</div>} 
+                        menuButton={<div className={darkMode.get() ? "nav-item darkmode" : "nav-item"}>File</div>} 
                         list={file} 
                         offsetX={154}
                         align='end' 
@@ -78,19 +87,20 @@ const Desktop = ({desktop, turnOn}) => {
                         styles={{open: true}}>
                         {file.map(c => <MenuItem className='menu-item' key={c.id}>{c.value}</MenuItem>)}
                     </Menu>
-                    <div className="nav-item">
+                    <div className={darkMode.get() ? "nav-item darkmode" : "nav-item"}>
                         View
                     </div>
                 </div>
                 <div className="right">
-                    <li className="nav-item">
+                    <li className={darkMode.get() ? "nav-item darkmode" : "nav-item"}>
                         <i className="fas fa-search"></i><span>Search</span>
                     </li>
-                    <li className="nav-item">
+                    <li className={darkMode.get() ? "nav-item darkmode" : "nav-item"}>
                         <Clock />
                     </li>
-                    <li className="nav-item">
-                        <i className="fas fa-sun"></i>
+                    <li onClick={setDarkMode} 
+                        className={darkMode.get() ? "nav-item darkmode" : "nav-item"}>
+                        <i className={darkMode.get() ? "fas fa-moon" : "fas fa-sun"}></i>
                     </li>
                 </div>
             </nav>

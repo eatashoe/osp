@@ -4,6 +4,7 @@ import FolderButtons from "./FolderButtons";
 import RightClickMenu from "./RightClickMenu";
 import Draggable from 'react-draggable';
 import Tabs from "./Tabs";
+import {useDarkMode} from "./GlobalStates";
 
 const Folder = (props) => {
     //resizer refs
@@ -20,6 +21,8 @@ const Folder = (props) => {
 
     const deskspace = React.useRef(null);
     const defaultPositions = {x: window.innerWidth/2 - 90, y: window.innerHeight/2 - 180}
+
+    const darkMode = useDarkMode();
 
     // React.useEffect(() => {
     //     setId(globalFolderId.get())
@@ -230,13 +233,39 @@ const Folder = (props) => {
         if(props.isFolder){
             dom = ReactDOM.createPortal(  
                 <React.Fragment>
-                    <Draggable disabled={!isExpanded} handle=".handle" onStart={handleStart} nodeRef={nodeRef} defaultPosition={{x: window.innerWidth/2 - 90, y: window.innerHeight/2 - 180}}>
-                        <div id={props.id} tabIndex='0' className='folder' ref={nodeRef} onFocus={focusHandler} onBlur={focusHandler}>
+                    <Draggable 
+                        disabled={!isExpanded} 
+                        handle=".handle" 
+                        onStart={handleStart} 
+                        nodeRef={nodeRef} 
+                        defaultPosition={{x: window.innerWidth/2 - 90, y: window.innerHeight/2 - 180}}>
+                        <div id={props.id} tabIndex='0' className={darkMode.get() ? "folder darkmode" : "folder"} ref={nodeRef} onFocus={focusHandler} onBlur={focusHandler}>
                             <div ref={nodeRef} className='handle' 
                                 onMouseDown={() => {down(nodeRef.current)}}
                                 onMouseUp={() => {up(nodeRef.current)}}>
                                 <div className='titleBox'>
-                                    <FolderButtons node={nodeRef} setExpand={setExpand} isExpanded={isExpanded} isMinimized={props.isMinimized} setMinimize={props.setMinimize} isClose={props.isClose} setClose={props.setClose} ex={ex} ey={ey} t={t} setEX={setEX} setEY={setEY} setT={setT} width={width} height={height} setWidth={setWidth} setHeight={setHeight} setFocus={props.setFocus} tab={props.tab} mx={props.mx} my={props.my}/>
+                                    <FolderButtons 
+                                        node={nodeRef} 
+                                        setExpand={setExpand} 
+                                        isExpanded={isExpanded} 
+                                        isMinimized={props.isMinimized} 
+                                        setMinimize={props.setMinimize} 
+                                        isClose={props.isClose} 
+                                        setClose={props.setClose} 
+                                        ex={ex} 
+                                        ey={ey} 
+                                        t={t} 
+                                        setEX={setEX} 
+                                        setEY={setEY} 
+                                        setT={setT} 
+                                        width={width} 
+                                        height={height} 
+                                        setWidth={setWidth} 
+                                        setHeight={setHeight} 
+                                        setFocus={props.setFocus} 
+                                        tab={props.tab} 
+                                        mx={props.mx} 
+                                        my={props.my}/>
                                     <div ref={props.titleRef} className='title'>{props.title}</div>
                                 </div>
                                 <div className='lines'>
@@ -249,11 +278,21 @@ const Folder = (props) => {
                                     <div className='line'></div>
                                 </div>
                             </div>
-                            <div id={props.id} ref={deskspace} className='folderSpace' onMouseDown={copyFolder}>
-                                <RightClickMenu deskspace={deskspace} folder={true} center={props.center} desktopRef={props.desktopRef} files={props.children} addKids={props.addKids} x={x} y={y} key={x,y}></RightClickMenu>
+                            <div id={props.id} ref={deskspace} className={darkMode.get() ? "folderSpace darkmode" : "folderSpace"} onMouseDown={copyFolder}>
+                                <RightClickMenu 
+                                    deskspace={deskspace} 
+                                    folder={true} 
+                                    center={props.center} 
+                                    desktopRef={props.desktopRef} 
+                                    files={props.children} 
+                                    addKids={props.addKids} 
+                                    x={x} 
+                                    y={y} 
+                                    key={x,y}>
+                                </RightClickMenu>
                                 {props.children}
                             </div>
-                            <div className='resizers'>
+                            <div className={darkMode.get() ? "resizers darkmode" : "resizers"}>
                                 <div ref={TLR} onMouseDown={(e) => handleMouseDown(TLR,nodeRef.current,e,dx,dy)} className='resizer top-left'></div>
                                 <div ref={TRR} onMouseDown={(e) => handleMouseDown(TRR,nodeRef.current,e,dx,dy)} className='resizer top-right'></div>
                                 <div ref={BLR} onMouseDown={(e) => handleMouseDown(BLR,nodeRef.current,e,dx,dy)} className='resizer bottom-left'></div>
@@ -266,7 +305,17 @@ const Folder = (props) => {
                         </div>
                     </Draggable>
                     
-                    <Tabs tab={props.tab} center={props.center} isClose={props.isClose} title={props.title} isMinimized={props.isMinimized} setMinimize={props.setMinimize} folder={nodeRef} focusHandler={focusHandler} mx={props.mx} my={props.my} titleRef={props.titleRef}/>
+                    <Tabs 
+                        tab={props.tab} 
+                        center={props.center} 
+                        isClose={props.isClose} 
+                        title={props.title} 
+                        isMinimized={props.isMinimized} 
+                        setMinimize={props.setMinimize} 
+                        folder={nodeRef} 
+                        focusHandler={focusHandler} 
+                        mx={props.mx} my={props.my} 
+                        titleRef={props.titleRef}/>
                 </React.Fragment>, props.desktopRef.current);
                 
             return(dom);
@@ -274,13 +323,39 @@ const Folder = (props) => {
         else if(props.isFile){
             dom = ReactDOM.createPortal(  
                 <React.Fragment>
-                    <Draggable disabled={!isExpanded} handle=".handle" onStart={handleStart} nodeRef={nodeRef} defaultPosition={defaultPositions}>
+                    <Draggable 
+                        disabled={!isExpanded} 
+                        handle=".handle" 
+                        onStart={handleStart} 
+                        nodeRef={nodeRef} 
+                        defaultPosition={defaultPositions}>
                         <div id={props.id} tabIndex='0' className='folder' ref={nodeRef} onFocus={focusHandler} onBlur={focusHandler}>
                             <div ref={nodeRef} className='handle' 
                                 onMouseDown={() => {down(nodeRef.current)}}
                                 onMouseUp={() => {up(nodeRef.current)}}>
                                 <div className='titleBox'>
-                                    <FolderButtons node={nodeRef} setExpand={setExpand} isExpanded={isExpanded} isMinimized={props.isMinimized} setMinimize={props.setMinimize} isClose={props.isClose} setClose={props.setClose} ex={ex} ey={ey} t={t} setEX={setEX} setEY={setEY} setT={setT} width={width} height={height} setWidth={setWidth} setHeight={setHeight} setFocus={props.setFocus} tab={props.tab} mx={props.mx} my={props.my}/>
+                                    <FolderButtons 
+                                        node={nodeRef} 
+                                        setExpand={setExpand} 
+                                        isExpanded={isExpanded} 
+                                        isMinimized={props.isMinimized} 
+                                        setMinimize={props.setMinimize} 
+                                        isClose={props.isClose} 
+                                        setClose={props.setClose} 
+                                        ex={ex} 
+                                        ey={ey} 
+                                        t={t} 
+                                        setEX={setEX} 
+                                        setEY={setEY} 
+                                        setT={setT} 
+                                        width={width} 
+                                        height={height} 
+                                        setWidth={setWidth} 
+                                        setHeight={setHeight} 
+                                        setFocus={props.setFocus} 
+                                        tab={props.tab} 
+                                        mx={props.mx} 
+                                        my={props.my}/>
                                     <div ref={props.titleRef} className='title'>{props.title}</div>
                                 </div>
                                 <div className='lines'>
@@ -294,7 +369,7 @@ const Folder = (props) => {
                                 </div>
                             </div>
                             <div className='folderSpace'>
-                                <iframe height={180} width={180} src="https://winstongong.netlify.app/" title="description"></iframe>
+                                <iframe height="100%" width="100%" src="https://winstongong.netlify.app/" title="description" frameBorder="0"></iframe>
                             </div>
                             <div className='resizers'>
                                 <div ref={TLR} onMouseDown={(e) => handleMouseDown(TLR,nodeRef.current,e,dx,dy)} className='resizer top-left'></div>
@@ -309,7 +384,18 @@ const Folder = (props) => {
                         </div>
                     </Draggable>
                     
-                    <Tabs tab={props.tab} center={props.center} isClose={props.isClose} title={props.title} isMinimized={props.isMinimized} setMinimize={props.setMinimize} folder={nodeRef} focusHandler={focusHandler} mx={props.mx} my={props.my} titleRef={props.titleRef}/>
+                    <Tabs 
+                        tab={props.tab} 
+                        center={props.center} 
+                        isClose={props.isClose} 
+                        title={props.title} 
+                        isMinimized={props.isMinimized} 
+                        setMinimize={props.setMinimize} 
+                        folder={nodeRef} 
+                        focusHandler={focusHandler} 
+                        mx={props.mx} 
+                        my={props.my} 
+                        titleRef={props.titleRef}/>
                 </React.Fragment>, props.desktopRef.current);
                 
             return(dom);
@@ -318,7 +404,16 @@ const Folder = (props) => {
     else if(props.isDesk){
         return(
             <div id="0" ref={props.desktopSpace} className="desktopSpace">
-                <RightClickMenu folder={true} nodeRef={nodeRef} center={props.center} desktopRef={props.desktopRef} files={props.children} addKids={props.addKids} x={x} y={y} key={x,y}></RightClickMenu>
+                <RightClickMenu 
+                    folder={true} 
+                    nodeRef={nodeRef} 
+                    center={props.center} 
+                    desktopRef={props.desktopRef} 
+                    files={props.children} 
+                    addKids={props.addKids} 
+                    x={x} 
+                    y={y} 
+                    key={x,y}></RightClickMenu>
                 {props.children}
             </div>
         );

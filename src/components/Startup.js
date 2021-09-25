@@ -1,5 +1,6 @@
 import React from "react";
-import Desktop from "./Desktop"
+import Desktop from "./Desktop";
+import {useDarkMode} from "./GlobalStates";
 
 const Startup = () => {
     const powerBtn = React.useRef(null);
@@ -8,6 +9,14 @@ const Startup = () => {
     const filter = React.useRef(null);
     const desktop = React.useRef(null);
     const [on, setOn] = React.useState(false);
+
+    const darkMode = useDarkMode();
+
+    React.useEffect(() => {
+        if(localStorage.getItem("darkmode") !== null){
+            darkMode.set(localStorage.getItem("darkmode"));
+        }
+    }, [])
 
     function turnOn(){
         if(!on){

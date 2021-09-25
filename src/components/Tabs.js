@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {useDarkMode} from "./GlobalStates";
 
 const Tabs = (props) => {
+
+    const darkMode = useDarkMode();
 
     const tab = props.tab;
 
@@ -38,7 +41,7 @@ const Tabs = (props) => {
     if(props.center && props.isClose){
         var dom = ReactDOM.createPortal(   
             <React.Fragment>
-                <div tabIndex="0" ref={tab} className='tab' onFocus={focus} onBlur={blur} onClick={unMinimize}>
+                <div tabIndex="0" ref={tab} className={darkMode.get() ? "tab darkmode" : "tab"} onFocus={focus} onBlur={blur} onClick={unMinimize}>
                 {props.title}
                 </div>
             </React.Fragment>, props.center.current)

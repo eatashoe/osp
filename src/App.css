@@ -1,4 +1,4 @@
-body .desktop .folder .resizers, body .desktop .folder .handle .titleBox .btns .btn, body .desktop .folder .handle .titleBox .title, body .desktop .folder .handle, body .desktop .rc-menu, body {
+body .desktop .folder .resizers, body .desktop .folder .folderSpace, body .desktop .folder .handle .titleBox .btns .btn, body .desktop .folder .handle .titleBox .title, body .desktop .folder .handle, body .desktop .rc-menu, body .desktop .desktopSpace, body .desktop .center .tab, body .desktop .nav, body {
   background: white;
   color: black;
 }
@@ -21,7 +21,7 @@ body .desktop .nav {
   display: flex;
   justify-content: space-between;
   border-bottom: black 2px solid;
-  background: white;
+  transition: ease-out 0.5s;
 }
 body .desktop .nav .left {
   float: left;
@@ -43,6 +43,18 @@ body .desktop .nav .nav-item:hover {
   background: black;
   cursor: pointer;
   user-select: none;
+}
+body .desktop .nav .nav-item.darkmode:hover {
+  color: black;
+  background: white;
+  cursor: pointer;
+  user-select: none;
+}
+body .desktop .nav.darkmode {
+  background: black;
+  color: white;
+  border-bottom: white 2px solid;
+  transition: ease-in 0.5s;
 }
 body .desktop .center {
   position: absolute;
@@ -72,7 +84,6 @@ body .desktop .center .tab {
   border-top-right-radius: 0.75em;
   text-align: center;
   pointer-events: visible;
-  background-color: white;
   writing-mode: vertical-rl;
   white-space: nowrap;
   overflow: hidden;
@@ -82,10 +93,12 @@ body .desktop .center .tab:hover {
   margin: 10px 5px 10px 0px;
   transition: margin ease 0.1s;
 }
+body .desktop .center .tab.darkmode {
+  border: 1px solid white;
+}
 body .desktop .desktopSpace {
   height: calc(100vh - 1.5em);
   width: 100vw;
-  background: white;
 }
 body .desktop .rc-menu {
   position: absolute;
@@ -116,8 +129,14 @@ body .desktop .rc-menu .rightclick-item:hover {
 body .desktop .rightclickscreen {
   height: 100%;
   width: 100%;
+  left: 1px;
   position: absolute;
   background: transparent;
+  transition: ease-out 0.5s;
+}
+body .desktop .rightclickscreen.darkmode {
+  background: black;
+  transition: ease-in 0.5s;
 }
 body .desktop .folder {
   width: 200px;
@@ -230,13 +249,25 @@ body .desktop .folder .folderSpace {
   top: 20px;
   width: 100%;
   height: calc(100% - 24px);
-  background: white;
+  transition: ease-out 0.5s;
+}
+body .desktop .folder .folderSpace iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+body .desktop .folder .folderSpace.darkmode {
+  background: black;
+  transition: ease-in 0.5s;
 }
 body .desktop .folder .resizers {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
   z-index: 10;
+  transition: ease-out 0.5s;
 }
 body .desktop .folder .resizers .resizer {
   width: 1%;
@@ -297,6 +328,13 @@ body .desktop .folder .resizers .resizer.bottom {
   cursor: ns-resize;
   z-index: 1;
 }
+body .desktop .folder .resizers.darkmode {
+  background: black;
+  transition: ease-in 0.5s;
+}
+body .desktop .folder.darkmode {
+  border: white 2px solid;
+}
 body .desktop .desk-item {
   height: 5em;
   width: 5em;
@@ -324,6 +362,9 @@ body .desktop .desk-item .item-name {
   font-size: 0.9em;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+body .desktop .desk-item .item-name.darkmode {
+  color: white;
 }
 body .desktop .desk-item .item-inputBox {
   min-height: auto;
@@ -617,67 +658,67 @@ body .startup .floor {
 }
 @keyframes flicker {
   0% {
-    opacity: 0.4303931509;
+    opacity: 0.1044817014;
   }
   5% {
-    opacity: 0.9172431504;
+    opacity: 0.9671486229;
   }
   10% {
-    opacity: 0.5624396852;
+    opacity: 0.8787893121;
   }
   15% {
-    opacity: 0.2919196601;
+    opacity: 0.5298846442;
   }
   20% {
-    opacity: 0.0414984413;
+    opacity: 0.9410737267;
   }
   25% {
-    opacity: 0.8122531845;
+    opacity: 0.2678399328;
   }
   30% {
-    opacity: 0.8642996662;
+    opacity: 0.2459457566;
   }
   35% {
-    opacity: 0.8502447358;
+    opacity: 0.6066119527;
   }
   40% {
-    opacity: 0.4080199509;
+    opacity: 0.0527970382;
   }
   45% {
-    opacity: 0.9639884565;
+    opacity: 0.3894630622;
   }
   50% {
-    opacity: 0.2187714161;
+    opacity: 0.680826992;
   }
   55% {
-    opacity: 0.5543197706;
+    opacity: 0.9797183532;
   }
   60% {
-    opacity: 0.1145487617;
+    opacity: 0.5620872804;
   }
   65% {
-    opacity: 0.2108517463;
+    opacity: 0.2890544221;
   }
   70% {
-    opacity: 0.1220042964;
+    opacity: 0.6734651823;
   }
   75% {
-    opacity: 0.9099452208;
+    opacity: 0.6207936385;
   }
   80% {
-    opacity: 0.0649728661;
+    opacity: 0.4503110953;
   }
   85% {
-    opacity: 0.9986000098;
+    opacity: 0.919668916;
   }
   90% {
-    opacity: 0.6299898989;
+    opacity: 0.639080433;
   }
   95% {
-    opacity: 0.9049662022;
+    opacity: 0.0682328164;
   }
   100% {
-    opacity: 0.8641683589;
+    opacity: 0.8185459838;
   }
 }
 @keyframes borderStop {
