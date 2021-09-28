@@ -3,7 +3,7 @@ import Draggable from 'react-draggable';
 import InputBox from "./InputBox";
 import Folder from "./Folder";
 import RightClickMenu from "./RightClickMenu";
-import {useGlobalDelete,useGlobalFolder,useGlobalFolderId, useDarkMode} from "./GlobalStates"
+import {useGlobalDelete,useGlobalFolder,useGlobalFolderId, useDarkMode, useGlobalDeskItem} from "./GlobalStates"
 
 const DeskItem = (props) =>{
     // const [desktopRef, setDesktopRef] = React.useState(null);
@@ -19,6 +19,7 @@ const DeskItem = (props) =>{
     const globalFolders = useGlobalFolder();
     const globalFolderId = useGlobalFolderId();
     const darkMode = useDarkMode();
+    const globalDeskItem = useGlobalDeskItem();
     
     const [isClose, setClose] = React.useState(false);
     const [isOpen, setOpen] = React.useState(false);
@@ -31,10 +32,18 @@ const DeskItem = (props) =>{
     function addKids(kid){
         // console.log(children,props.children);
         addChildren(children => children.concat(kid));
+        // console.log(globalFolderId.get());
+        if(kid.length !== undefined){
+            globalDeskItem.set(deskItem => ([...deskItem, ...kid]));
+        }
+        else{
+            globalDeskItem.set(deskItem => ([...deskItem,kid]));
+        }   
     }
 
     React.useEffect(() => {
         if(props.children && props.desktopRef && props.desktopRef.current){
+            console.log(props.children)
             addKids(props.children);
         }
 
@@ -44,11 +53,18 @@ const DeskItem = (props) =>{
         if(props.newFolder){
             setRename(true);
         }
-        setId(globalFolderId.get())
-        
-        globalFolders.set(globalFolders => ({...globalFolders, [globalFolderId.get()]: folder}))
-        globalDeleted.set(globalDeleted => ({...globalDeleted, [globalFolderId.get()]: false}))
-        globalFolderId.set(globalFolderId => globalFolderId + 1)
+        if(props.id === undefined){
+            setId(globalFolderId.get());
+            globalFolderId.set(globalFolderId => globalFolderId + 1)
+
+            globalFolders.set(globalFolders => ({...globalFolders, [id]: folder}))
+            globalDeleted.set(globalDeleted => ({...globalDeleted, [id]: false}))
+        }
+        else{
+            setId(props.id);
+            globalFolders.set(globalFolders => ({...globalFolders, [id]: folder}))
+            globalDeleted.set(globalDeleted => ({...globalDeleted, [id]: false}))
+        }
     }, [])
 
     //tab stuff
@@ -221,9 +237,10 @@ const DeskItem = (props) =>{
                             renameFolder={renameFolder}>
                         </InputBox>}
                         <RightClickMenu 
-                            id={id} 
+                            id={props.id ? props.id : id} 
                             title={title} 
-                            deskItem={true} 
+                            deskitem={deskitem}
+                            isDeskItem={true} 
                             rc={rcRef} 
                             setRename={setRename} 
                             files={children}>
@@ -233,10 +250,9 @@ const DeskItem = (props) =>{
                 </Draggable>
 
                 <Folder 
-                    id={id} 
+                    id={props.id ? props.id : id} 
                     rcRef={rcRef} 
-                    isOpen={isOpen} 
-                    id={props.id} 
+                    isOpen={isOpen}  
                     addKids={addKids} 
                     isFile={props.isFile} 
                     isFolder={props.isFolder} 

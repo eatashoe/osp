@@ -24,13 +24,6 @@ const Folder = (props) => {
 
     const darkMode = useDarkMode();
 
-    // React.useEffect(() => {
-    //     setId(globalFolderId.get())
-    //     globalFolders.set(globalFolders => ({...globalFolders, [globalFolderId.get()]: nodeRef}))
-    //     globalDelete.set(globalDelete => ({...globalDelete, [globalFolderId.get()]: props.removeKid}))
-    //     globalFolderId.set(globalFolderId => globalFolderId + 1)
-    // },[])
-
     React.useEffect(() => {
         if(props.isClose){
             nodeRef.current.style.opacity = '1';
@@ -280,6 +273,7 @@ const Folder = (props) => {
                             </div>
                             <div id={props.id} ref={deskspace} className={darkMode.get() ? "folderSpace darkmode" : "folderSpace"} onMouseDown={copyFolder}>
                                 <RightClickMenu 
+                                    id={props.id}
                                     deskspace={deskspace} 
                                     folder={true} 
                                     center={props.center} 
@@ -405,6 +399,7 @@ const Folder = (props) => {
         return(
             <div id="0" ref={props.desktopSpace} className="desktopSpace">
                 <RightClickMenu 
+                    id={props.id}
                     folder={true} 
                     nodeRef={nodeRef} 
                     center={props.center} 

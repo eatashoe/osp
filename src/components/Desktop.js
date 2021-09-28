@@ -27,6 +27,9 @@ const Desktop = ({desktop, turnOn}) => {
     React.useEffect(() => {
         setTabs(center);
         setFolders(desktopSpace);
+
+        // globalDeskItem.set(deskItem => ([...deskItem, ...deskStuff]));
+        // globalDeskItem.set(deskItem => ([...deskItem, ...folder1Stuff]));
     },[]);
     
     const sub = [
@@ -54,13 +57,13 @@ const Desktop = ({desktop, turnOn}) => {
     ]
 
     const folder1Stuff = [
-        <DeskItem id={4}  isFolder={true} center={tabs} desktopRef={folder} title={'Folder1'} x={20} y={20} children={[]}/>,
-        <DeskItem id={5} isFolder={true} center={tabs} desktopRef={folder} title={'Folder2'} x={100} y={20} children={[]}/>]
+        <DeskItem parent={1} key={4} id={4} isFolder={true} center={tabs} desktopRef={folder} title={'Folder1'} x={20} y={20} children={[]}/>,
+        <DeskItem parent={1} key={5} id={5} isFolder={true} center={tabs} desktopRef={folder} title={'Folder2'} x={100} y={20} children={[]}/>]
 
     const deskStuff = [
-        <DeskItem id={1} isFolder={true} center={tabs} title={'Folder'} x={20} y={20} children={folder1Stuff} desktopRef={folder}/>,
-        <DeskItem id={2} isFolder={true} center={tabs} title={'hOmEWoRkforfuntodayyouknow'} x={100} y={20} desktopRef={folder}/>,
-        <DeskItem id={3} isFile={true} center={tabs} title={'website for me by me yo'} x={180} y={20} desktopRef={folder}/> 
+        <DeskItem parent={0} key={1} id={1} isFolder={true} center={tabs} title={'Folder'} x={20} y={20} children={folder1Stuff} desktopRef={folder}/>,
+        <DeskItem parent={0} key={2} id={2} isFolder={true} center={tabs} title={'hOmEWoRkforfuntodayyouknow'} x={100} y={20} desktopRef={folder}/>,
+        <DeskItem parent={0} key={3} id={3} isFile={true} center={tabs} title={'website for me by me yo'} x={180} y={20} desktopRef={folder}/> 
     ]
 
     return(
