@@ -1,9 +1,11 @@
-import React from "react"
+import React from "react";
 import Draggable from 'react-draggable';
 import InputBox from "./InputBox";
 import Folder from "./Folder";
+import About from "./About";
 import RightClickMenu from "./RightClickMenu";
-import {useGlobalDelete,useGlobalFolder,useGlobalFolderId, useDarkMode, useGlobalDeskItem} from "./GlobalStates"
+import {useGlobalDelete,useGlobalFolder,useGlobalFolderId, useDarkMode, useGlobalDeskItem, useGlobalOpenFolder, useGlobalDirectory} from "./GlobalStates"
+import { Downgraded } from "@hookstate/core";
 
 const DeskItem = (props) =>{
     // const [desktopRef, setDesktopRef] = React.useState(null);
@@ -20,6 +22,8 @@ const DeskItem = (props) =>{
     const globalFolderId = useGlobalFolderId();
     const darkMode = useDarkMode();
     const globalDeskItem = useGlobalDeskItem();
+    const globalOpenFolder = useGlobalOpenFolder();
+    const globalDirectory = useGlobalDirectory();
     
     const [isClose, setClose] = React.useState(false);
     const [isOpen, setOpen] = React.useState(false);
@@ -27,9 +31,21 @@ const DeskItem = (props) =>{
     const [title, setTitle] = React.useState(props.title);
     const [rename, setRename] = React.useState(false);
 
+    const [about,setAbout] = React.useState(false);
+
     const [children, addChildren] = React.useState([]);
 
+    function showAbout(){
+        if(about){
+            setAbout(false);
+        }
+        else{
+            setAbout(true);
+        }
+    }
+
     function addKids(kid){
+        // console.log('addKids');
         // console.log(children,props.children);
         addChildren(children => children.concat(kid));
         // console.log(globalFolderId.get());
@@ -43,11 +59,24 @@ const DeskItem = (props) =>{
 
     React.useEffect(() => {
         if(props.children && props.desktopRef && props.desktopRef.current){
-            console.log(props.children)
+            // console.log(props.children)
             addKids(props.children);
+            setOpen(true);
         }
 
     }, [props.desktopRef])
+
+    // React.useEffect(() => {
+    //     if(props.children || children.length > 0){
+    //         setOpen(true);
+    //     }
+    // },[children])
+
+    React.useEffect(() => {
+        if(Object.keys(globalFolders.attach(Downgraded).get()).length-1 === globalDeskItem.get().length){
+            globalDirectory.get()["update"]();
+        }
+    },[title])
 
     React.useEffect(() => {
         if(props.newFolder){
@@ -55,15 +84,24 @@ const DeskItem = (props) =>{
         }
         if(props.id === undefined){
             setId(globalFolderId.get());
-            globalFolderId.set(globalFolderId => globalFolderId + 1)
+            globalFolderId.set(globalFolderId => globalFolderId + 1);
 
-            globalFolders.set(globalFolders => ({...globalFolders, [id]: folder}))
-            globalDeleted.set(globalDeleted => ({...globalDeleted, [id]: false}))
+            globalOpenFolder.set(open => ([...open, () => openFolder()]));
+            globalFolders.set(globalFolder => ({...globalFolder, [id]: [deskitem,folder]}));
+            globalDeleted.set(globalDelete => ({...globalDelete, [id]: false}));
+            // if(!props.isDesk){
+            //     globalFolders.set(globalFolder => ({...globalFolder, [id]: directoryRef}));
+            // }
         }
         else{
             setId(props.id);
-            globalFolders.set(globalFolders => ({...globalFolders, [id]: folder}))
-            globalDeleted.set(globalDeleted => ({...globalDeleted, [id]: false}))
+
+            globalOpenFolder.set(open => ([...open, () => openFolder()]));
+            globalFolders.set(globalFolder => ({...globalFolder, [props.id]: [deskitem,folder]}));
+            globalDeleted.set(globalDelete => ({...globalDelete, [props.id]: false}));
+            // if(!props.isDesk){
+            //     globalFolders.set(globalFolder => ({...globalFolder, [props.id]: directoryRef}));
+            // }
         }
     }, [])
 
@@ -74,35 +112,6 @@ const DeskItem = (props) =>{
     const [mx, setMx] = React.useState(0);
     const [my, setMy] = React.useState(0);
 
-    // function location(e){
-    //     // console.log(deskitem.current.getBoundingClientRect().left,deskitem.current.getBoundingClientRect().top);
-    //     // console.log(deskitem.current.parentElement.offsetHeight,deskitem.current.parentElement.getBoundingClientRect());
-    //     // console.log(document.elementsFromPoint(e.pageX,e.pageY)[4].parentElement);
-    //     // console.log(deskitem);
-    //     if(e.pageX < deskitem.current.parentElement.getBoundingClientRect().left ||
-    //        e.pageX > deskitem.current.parentElement.getBoundingClientRect().right ||
-    //        e.pageY < deskitem.current.parentElement.getBoundingClientRect().top ||
-    //        e.pageY > deskitem.current.parentElement.getBoundingClientRect().bottom){
-    //         setBounds('')
-    //         // if(e.path[0].parentElement !== deskitem.current.parentElement){
-    //         //     e.path[0].parentElement.style.width= '98%';
-    //         //     e.path[0].parentElement.style.border= 'red 2px dashed';
-    //         //     console.log(e.path[0].parentElement)
-    //         // }
-    //         // e.path[0].parentElement.style.width= '98%';
-    //         // e.path[0].parentElement.style.border= 'red 2px dashed';
-    //         // console.log(e.path[0].parentElement)
-    //         // console.log(globalFolders.get())
-    //     }
-    //     else{
-    //         // e.path[0].parentElement.style.width= '100%';
-    //         // e.path[0].parentElement.style.border= '';
-    //         setBounds('parent')
-    //     }
-    // }
-    // function dropped(){
-    //     globalCopy.set(null);
-    // }
 
     function hoverIn(){
         if(darkMode.get()){
@@ -243,11 +252,14 @@ const DeskItem = (props) =>{
                             isDeskItem={true} 
                             rc={rcRef} 
                             setRename={setRename} 
-                            files={children}>
+                            files={children}
+                            setAbout={setAbout}>
                         </RightClickMenu>
                     </div>
                     
                 </Draggable>
+
+                <About info={props.info} isInfo={true} about={about} showAbout={showAbout} desktopRef={props.desktopRef}></About>
 
                 <Folder 
                     id={props.id ? props.id : id} 
@@ -272,8 +284,12 @@ const DeskItem = (props) =>{
                     my={my} 
                     setMy={setMy} 
                     children={children} 
-                    desktopRef={props.desktopRef}/>
-
+                    desktopRef={props.desktopRef}
+                    link={props.link}
+                    img={props.img}
+                    size={props.size}
+                    vid={props.vid}/>
+            
             </React.Fragment>
         );
     }

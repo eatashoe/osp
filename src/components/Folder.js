@@ -20,7 +20,8 @@ const Folder = (props) => {
     const TR = React.useRef(null);
 
     const deskspace = React.useRef(null);
-    const defaultPositions = {x: window.innerWidth/2 - 90, y: window.innerHeight/2 - 180}
+    const [defaultPositions,setDefaultPosition] = React.useState({x: (window.innerWidth/2 - 90)+(Math.floor(Math.random() * 201) - 100), y: (window.innerHeight/2 - 180) + (Math.floor(Math.random() * 201) - 100)})
+    // const defaultPositions = {x: (window.innerWidth/2 - 90), y: (window.innerHeight/2 - 180)}
 
     const darkMode = useDarkMode();
 
@@ -50,11 +51,20 @@ const Folder = (props) => {
         if(props.isClose && e.target === nodeRef.current){
             // console.log(e.target.innerText);
             if(props.focus){
-                props.tab.current.style.background="black";
-                props.tab.current.style.color="white";
-                props.titleRef.current.style.color="black";
-                nodeRef.current.style.zIndex= '4';
-                props.setFocus(false);
+                if(!darkMode.get()){
+                    props.tab.current.style.background="black";
+                    props.tab.current.style.color="white";
+                    props.titleRef.current.style.color="black";
+                    nodeRef.current.style.zIndex= '4';
+                    props.setFocus(false);
+                }
+                else{
+                    props.tab.current.style.background="white";
+                    props.tab.current.style.color="black";
+                    props.titleRef.current.style.color="black";
+                    nodeRef.current.style.zIndex= '4';
+                    props.setFocus(false);
+                }   
             }
             else{
                 props.tab.current.style.background="";
@@ -86,140 +96,103 @@ const Folder = (props) => {
 
     function handleMouseDown(currentResizer, element, e, x, y) {
 
-        e.preventDefault();
-        const minimum_size = 180;
-        let original_width = element.clientWidth;
-        let original_height = element.clientHeight;
-        let original_x = element.getBoundingClientRect().left;
-        let original_y = element.getBoundingClientRect().top;
-        let original_mouse_x = e.pageX;
-        let original_mouse_y = e.pageY;
-        window.addEventListener('mousemove', resize)
-        window.addEventListener('mouseup', stopResize)
-        
-        function resize(cursor) {
-          if (currentResizer.current.classList.contains('bottom-right')) {
-            const width = original_width + (cursor.pageX - original_mouse_x);
-            const height = original_height + (cursor.pageY - original_mouse_y)
-            if (width > minimum_size) {
-              element.style.width = width + 'px'
+        if(isExpanded){
+            e.preventDefault();
+            const minimum_size = 180;
+            let original_width = element.clientWidth;
+            let original_height = element.clientHeight;
+            let original_x = element.getBoundingClientRect().left;
+            let original_y = element.getBoundingClientRect().top;
+            let original_mouse_x = e.pageX;
+            let original_mouse_y = e.pageY;
+            window.addEventListener('mousemove', resize)
+            window.addEventListener('mouseup', stopResize)
+            
+            function resize(cursor) {
+                if (currentResizer.current.classList.contains('bottom-right')) {
+                    const width = original_width + (cursor.pageX - original_mouse_x);
+                    const height = original_height + (cursor.pageY - original_mouse_y)
+                    if (width > minimum_size) {
+                        element.style.width = width + 'px'
+                    }
+                    if (height > minimum_size) {
+                        element.style.height = height + 'px'
+                    }
+                }
+                else if (currentResizer.current.classList.contains('bottom-left')) {
+                    const height = original_height + (cursor.pageY - original_mouse_y)
+                    const width = original_width - (cursor.pageX - original_mouse_x)
+                    if (height > minimum_size) {
+                        element.style.height = height + 'px'
+                    }
+                    if (width > minimum_size) {
+                        element.style.width = width + 'px'
+                        element.style.left = (original_x + (cursor.pageX - original_mouse_x) - x - defaultPositions.x) + 'px'
+                        props.setMx(props.mx + (cursor.pageX - original_mouse_x));
+                    }
+                }
+                else if (currentResizer.current.classList.contains('top-right')) {
+                    const width = original_width + (cursor.pageX - original_mouse_x)
+                    const height = original_height - (cursor.pageY - original_mouse_y)
+                    if (width > minimum_size) {
+                        element.style.width = width + 'px'
+                    }
+                    if (height > minimum_size) {
+                        element.style.height = height + 'px'
+                        element.style.top = (original_y + (cursor.pageY - original_mouse_y) - y - defaultPositions.y) + 'px'
+                        props.setMy(props.my + (cursor.pageY - original_mouse_y));
+                    }
+                }
+                else if(currentResizer.current.classList.contains('top-left')){
+                    const width = original_width - (cursor.pageX - original_mouse_x)
+                    const height = original_height - (cursor.pageY - original_mouse_y)
+                    if (width > minimum_size) {
+                        element.style.width = width + 'px'
+                        element.style.left = (original_x + (cursor.pageX - original_mouse_x) - x - defaultPositions.x) + 'px'
+                        props.setMx(props.mx + (cursor.pageX - original_mouse_x));
+                    }
+                    if (height > minimum_size) {
+                        element.style.height = height + 'px'
+                        element.style.top = (original_y + (cursor.pageY - original_mouse_y) - y - defaultPositions.y) + 'px'
+                        //   (window.innerHeight/2 - 155.570312)
+                        props.setMy(props.my + (cursor.pageY - original_mouse_y));
+                    }
+                }
+                else if(currentResizer.current.classList.contains('left')){
+                    const width = original_width - (cursor.pageX - original_mouse_x)
+                    if (width > minimum_size) {
+                        element.style.width = width + 'px'
+                        element.style.left = (original_x + (cursor.pageX - original_mouse_x) - x - defaultPositions.x) + 'px'
+                        props.setMx(props.mx + (cursor.pageX - original_mouse_x));
+                    }
+                }
+                else if(currentResizer.current.classList.contains('right')){
+                    const width = original_width + (cursor.pageX - original_mouse_x);
+                    if (width > minimum_size) {
+                        element.style.width = width + 'px'
+                    }
+                }
+                else if(currentResizer.current.classList.contains('top')){
+                    const height = original_height - (cursor.pageY - original_mouse_y)
+                    if (height > minimum_size) {
+                        element.style.height = height + 'px'
+                        element.style.top = (original_y + (cursor.pageY - original_mouse_y) - y - defaultPositions.y) + 'px'
+                        props.setMy(props.my + (cursor.pageY - original_mouse_y));
+                    }
+                }
+                else{
+                    const height = original_height + (cursor.pageY - original_mouse_y)
+                    if (height > minimum_size) {
+                        element.style.height = height + 'px'
+                    }
+                }
             }
-            if (height > minimum_size) {
-              element.style.height = height + 'px'
+            function stopResize() {
+                window.removeEventListener('mousemove', resize)
             }
-          }
-          else if (currentResizer.current.classList.contains('bottom-left')) {
-            const height = original_height + (cursor.pageY - original_mouse_y)
-            const width = original_width - (cursor.pageX - original_mouse_x)
-            if (height > minimum_size) {
-              element.style.height = height + 'px'
-            }
-            if (width > minimum_size) {
-              element.style.width = width + 'px'
-              element.style.left = (original_x + (cursor.pageX - original_mouse_x) - x - defaultPositions.x) + 'px'
-              props.setMx(props.mx + (cursor.pageX - original_mouse_x));
-            }
-          }
-          else if (currentResizer.current.classList.contains('top-right')) {
-            const width = original_width + (cursor.pageX - original_mouse_x)
-            const height = original_height - (cursor.pageY - original_mouse_y)
-            if (width > minimum_size) {
-              element.style.width = width + 'px'
-            }
-            if (height > minimum_size) {
-              element.style.height = height + 'px'
-              element.style.top = (original_y + (cursor.pageY - original_mouse_y) - y - defaultPositions.y) + 'px'
-              props.setMy(props.my + (cursor.pageY - original_mouse_y));
-            }
-          }
-          else if(currentResizer.current.classList.contains('top-left')){
-            const width = original_width - (cursor.pageX - original_mouse_x)
-            const height = original_height - (cursor.pageY - original_mouse_y)
-            if (width > minimum_size) {
-              element.style.width = width + 'px'
-              element.style.left = (original_x + (cursor.pageX - original_mouse_x) - x - defaultPositions.x) + 'px'
-              props.setMx(props.mx + (cursor.pageX - original_mouse_x));
-            }
-            if (height > minimum_size) {
-              element.style.height = height + 'px'
-              element.style.top = (original_y + (cursor.pageY - original_mouse_y) - y - defaultPositions.y) + 'px'
-            //   (window.innerHeight/2 - 155.570312)
-              props.setMy(props.my + (cursor.pageY - original_mouse_y));
-            }
-          }
-          else if(currentResizer.current.classList.contains('left')){
-              const width = original_width - (cursor.pageX - original_mouse_x)
-              if (width > minimum_size) {
-              element.style.width = width + 'px'
-              element.style.left = (original_x + (cursor.pageX - original_mouse_x) - x - defaultPositions.x) + 'px'
-              props.setMx(props.mx + (cursor.pageX - original_mouse_x));
-            }
-          }
-          else if(currentResizer.current.classList.contains('right')){
-              const width = original_width + (cursor.pageX - original_mouse_x);
-              if (width > minimum_size) {
-              element.style.width = width + 'px'
-            }
-          }
-          else if(currentResizer.current.classList.contains('top')){
-              const height = original_height - (cursor.pageY - original_mouse_y)
-              if (height > minimum_size) {
-              element.style.height = height + 'px'
-              element.style.top = (original_y + (cursor.pageY - original_mouse_y) - y - defaultPositions.y) + 'px'
-              props.setMy(props.my + (cursor.pageY - original_mouse_y));
-            }
-          }
-          else{
-              const height = original_height + (cursor.pageY - original_mouse_y)
-              if (height > minimum_size) {
-              element.style.height = height + 'px'
-            }
-          }
-        }
-        function stopResize() {
-          window.removeEventListener('mousemove', resize)
         }
     }
     function handleStart(e, ui){ e.stopPropagation(); }
-
-    function copyFolder(e){
-
-        // var n;
-        // if(props.desktopSpace){
-        //     n = props.desktopSpace.current.children;
-        // }
-        // else{
-        //     n = nodeRef.current.children[1].children;
-        // }
-        // // console.log(e)
-        // // console.log(e.target,nodeRef.current.children[1].children[0])
-        // // e.target.offsetParent.outerText == nodeRef.current.children[1].children[0] &&
-        // // console.log(e)
-        // // console.log('deskshit: ',props.desktopRef);
-        // // console.log('this is the copy: ', globalCopy.get())
-        // // console.log('all the folders nicely :) ', globalFolders.get()[0])
-        // if((e.target === n[0] || 
-        //     (e.target.clientHeight === 80 && e.target.clientWidth === 80)) 
-        //     && props.children.length !== 0){
-        //     // console.log(props.children,nodeRef);
-        //     var x;
-        //     for(x = 0; x < n.length; x++){
-        //         if(n[x].outerText === e.target.offsetParent.outerText){
-        //             props.globalCopy.set(props.children[x-1])
-        //             // console.log(props.globalCopy.get());
-        //         }
-        //     }
-        //     // nodeRef.current.children[1].children.forEach(element => {
-        //     //     if(element.outerText == e.target.offsetParent.outerText){
-        //     //         props.setCopy(props.children[x-1])
-        //     //     }
-        //     //     x++
-        //     // });
-        // }
-        // // window.addEventListener('ondrag',console.log('cockcock'))
-        // // console.log(document.elementsFromPoint(e.pageX,e.pageY)[4]);
-        // e.stopPropagation()
-    }
 
     if(props.desktopRef && props.isOpen){
         var dom;
@@ -231,8 +204,8 @@ const Folder = (props) => {
                         handle=".handle" 
                         onStart={handleStart} 
                         nodeRef={nodeRef} 
-                        defaultPosition={{x: window.innerWidth/2 - 90, y: window.innerHeight/2 - 180}}>
-                        <div id={props.id} tabIndex='0' className={darkMode.get() ? "folder darkmode" : "folder"} ref={nodeRef} onFocus={focusHandler} onBlur={focusHandler}>
+                        defaultPosition={defaultPositions}>
+                        <div id={props.id} style={props.size} tabIndex='0' className={darkMode.get() ? "folder darkmode" : "folder"} ref={nodeRef} onFocus={focusHandler} onBlur={focusHandler}>
                             <div ref={nodeRef} className='handle' 
                                 onMouseDown={() => {down(nodeRef.current)}}
                                 onMouseUp={() => {up(nodeRef.current)}}>
@@ -271,7 +244,7 @@ const Folder = (props) => {
                                     <div className='line'></div>
                                 </div>
                             </div>
-                            <div id={props.id} ref={deskspace} className={darkMode.get() ? "folderSpace darkmode" : "folderSpace"} onMouseDown={copyFolder}>
+                            <div id={props.id} ref={deskspace} className={darkMode.get() ? "folderSpace darkmode" : "folderSpace"}>
                                 <RightClickMenu 
                                     id={props.id}
                                     deskspace={deskspace} 
@@ -282,7 +255,7 @@ const Folder = (props) => {
                                     addKids={props.addKids} 
                                     x={x} 
                                     y={y} 
-                                    key={x,y}>
+                                    key={{x,y}}>
                                 </RightClickMenu>
                                 {props.children}
                             </div>
@@ -323,7 +296,7 @@ const Folder = (props) => {
                         onStart={handleStart} 
                         nodeRef={nodeRef} 
                         defaultPosition={defaultPositions}>
-                        <div id={props.id} tabIndex='0' className='folder' ref={nodeRef} onFocus={focusHandler} onBlur={focusHandler}>
+                        <div id={props.id} style={props.size} tabIndex='0' className='folder' ref={nodeRef} onFocus={focusHandler} onBlur={focusHandler}>
                             <div ref={nodeRef} className='handle' 
                                 onMouseDown={() => {down(nodeRef.current)}}
                                 onMouseUp={() => {up(nodeRef.current)}}>
@@ -363,7 +336,17 @@ const Folder = (props) => {
                                 </div>
                             </div>
                             <div className='folderSpace'>
-                                <iframe height="100%" width="100%" src="https://winstongong.netlify.app/" title="description" frameBorder="0"></iframe>
+                                {
+                                props.link
+                                ?                  
+                                <iframe  height="100%" width="100%" src={props.link} title="description" frameBorder="0"></iframe>
+                                :
+                                props.img
+                                ?
+                                <img src={props.img} alt={"nothing"}></img>
+                                :
+                                <video src={props.vid} type="video/mp4" controls autoPlay></video>
+                                }                            
                             </div>
                             <div className='resizers'>
                                 <div ref={TLR} onMouseDown={(e) => handleMouseDown(TLR,nodeRef.current,e,dx,dy)} className='resizer top-left'></div>
@@ -408,7 +391,7 @@ const Folder = (props) => {
                     addKids={props.addKids} 
                     x={x} 
                     y={y} 
-                    key={x,y}></RightClickMenu>
+                    key={{x,y}}></RightClickMenu>
                 {props.children}
             </div>
         );

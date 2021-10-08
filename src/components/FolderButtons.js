@@ -61,20 +61,31 @@ const FolderButtons = (props) =>{
         }
     }
     
-    return (
-        <div className='btns' onMouseOver={() => setVisible(true)} onMouseOut={() => setVisible(false)}>
-            <div className='btn red'>
-                <i ref={close} style={{visibility: `${visible ? 'visible' : 'hidden'}`}} className="fas fa-times fa-xs close" onClick={closeFolder}></i>
+    if(props.about){
+        return(
+            <div className='btns' onMouseOver={() => setVisible(true)} onMouseOut={() => setVisible(false)}>
+                <div className='btn red'>
+                        <i ref={close} style={{visibility: `${visible ? 'visible' : 'hidden'}`}} className="fas fa-times fa-xs close" onClick={props.showAbout}></i>
+                    </div>
             </div>
-            <div className='btn yellow'>
-                <i ref={minimize} style={{visibility: `${visible ? 'visible' : 'hidden'}`}} className="fas fa-minus fa-xs minimize" onClick={minimizeFolder}></i>
+        );
+    }
+    else{
+        return (
+            <div className='btns' onMouseOver={() => setVisible(true)} onMouseOut={() => setVisible(false)}>
+                <div className='btn red'>
+                    <i ref={close} style={{visibility: `${visible ? 'visible' : 'hidden'}`}} className="fas fa-times fa-xs close" onClick={closeFolder}></i>
+                </div>
+                <div className='btn yellow'>
+                    <i ref={minimize} style={{visibility: `${visible ? 'visible' : 'hidden'}`}} className="fas fa-minus fa-xs minimize" onClick={minimizeFolder}></i>
+                </div>
+                <div className='btn green'>
+                    <i ref={expand} style={{visibility: `${visible ? 'visible' : 'hidden'}`}} className="fas fa-expand-alt fa-xs expand" onClick={expandFolder}></i>
+                    <i ref={compress} style={{visibility: `${visible ? 'visible' : 'hidden'}`}} className="fas fa-compress-alt fa-xs compress" onClick={expandFolder}></i>
+                </div>
             </div>
-            <div className='btn green'>
-                <i ref={expand} style={{visibility: `${visible ? 'visible' : 'hidden'}`}} className="fas fa-expand-alt fa-xs expand" onClick={expandFolder}></i>
-                <i ref={compress} style={{visibility: `${visible ? 'visible' : 'hidden'}`}} className="fas fa-compress-alt fa-xs compress" onClick={expandFolder}></i>
-            </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default FolderButtons;

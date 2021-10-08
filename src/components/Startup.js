@@ -14,7 +14,12 @@ const Startup = () => {
 
     React.useEffect(() => {
         if(localStorage.getItem("darkmode") !== null){
-            darkMode.set(localStorage.getItem("darkmode"));
+            if(localStorage.getItem("darkmode") === "true"){
+                darkMode.set(true);
+            }
+            else{
+                darkMode.set(false)
+            }
         }
     }, [])
 

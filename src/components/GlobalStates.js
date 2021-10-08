@@ -1,12 +1,13 @@
 import { createState, useState } from '@hookstate/core';
 
 const globalFolderStates = createState({});
-const globalFolderIdStates = createState(5);
+const globalFolderIdStates = createState(17);
 const globalDeleteStates = createState({})
 const globalDarkModeState = createState(false);
 const globalDeskItem = createState([]);
 const globalCopy = createState(null);
-const globalPasteCount = createState({});
+const globalDirectory = createState([]);
+const globalOpenFolder = createState([]);
 
 const wrapState = (s) => ({
     get: () => s.value,
@@ -27,5 +28,8 @@ export const useGlobalDeskItem = () => useState(globalDeskItem);
 
 export const useGlobalCopy = () => useState(globalCopy);
 
-export const useGlobalPaste = () => useState(globalPasteCount);
+export const useGlobalDirectory = () => useState(globalDirectory);
+
+export const useGlobalOpenFolder = () => useState(globalOpenFolder);
+
 
