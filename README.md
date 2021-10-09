@@ -3,3 +3,6 @@ This project is used to help me learn more about React. In the project I built m
 ## Demo
 Here is a working live [demo](https://lab3-winstongong.netlify.app/)
 ## Installing
+clone repo <br />
+npm start <br />
+open localhost
