@@ -785,69 +785,6 @@ body .startup .floor {
 }
 @keyframes flicker {
   0% {
-<<<<<<< HEAD
-    opacity: 0.9226420956;
-  }
-  5% {
-    opacity: 0.303455133;
-  }
-  10% {
-    opacity: 0.7801261424;
-  }
-  15% {
-    opacity: 0.1680550133;
-  }
-  20% {
-    opacity: 0.3415907304;
-  }
-  25% {
-    opacity: 0.9400271833;
-  }
-  30% {
-    opacity: 0.9457996048;
-  }
-  35% {
-    opacity: 0.0546209577;
-  }
-  40% {
-    opacity: 0.8694493926;
-  }
-  45% {
-    opacity: 0.3551678106;
-  }
-  50% {
-    opacity: 0.6886035447;
-  }
-  55% {
-    opacity: 0.2928458007;
-  }
-  60% {
-    opacity: 0.2723543341;
-  }
-  65% {
-    opacity: 0.7658650629;
-  }
-  70% {
-    opacity: 0.8962038033;
-  }
-  75% {
-    opacity: 0.509359078;
-  }
-  80% {
-    opacity: 0.5027140266;
-  }
-  85% {
-    opacity: 0.9038091776;
-  }
-  90% {
-    opacity: 0.2568733869;
-  }
-  95% {
-    opacity: 0.5507018763;
-  }
-  100% {
-    opacity: 0.1512432003;
-=======
     opacity: 0.0617683533;
   }
   5% {
@@ -928,7 +865,6 @@ body .startup .floor {
   }
   100% {
     transform: translate(3px -6px);
->>>>>>> develop
   }
 }
 @keyframes turn-on {
