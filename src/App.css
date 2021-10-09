@@ -1,4 +1,4 @@
-body .desktop .folder .resizers, body .desktop .folder .handle .titleBox .btns .btn, body .desktop .folder .handle .titleBox .title, body .desktop .folder .handle, body .desktop .rc-menu, body {
+body .desktop .about .aboutInfo, body .desktop .about .handle .titleBox .btns .btn, body .desktop .about .handle .titleBox .title, body .desktop .about .handle, body .desktop .folder .resizers, body .desktop .folder .folderSpace, body .desktop .folder .handle .titleBox .btns .btn, body .desktop .folder .handle .titleBox .title, body .desktop .folder .handle, body .desktop .rc-menu, body .desktop .desktopSpace, body .desktop .center .tab, body .desktop .nav, body {
   background: white;
   color: black;
 }
@@ -8,11 +8,12 @@ body .desktop {
   transition: opacity 1s;
   position: absolute;
   width: 100vw;
+  height: 100vh;
   top: 1vmin;
   left: 1vmin;
   opacity: 0;
   pointer-events: none;
-  line-height: 1;
+  line-height: 1em;
 }
 body .desktop .nav {
   height: 1.5em;
@@ -20,29 +21,12 @@ body .desktop .nav {
   display: flex;
   justify-content: space-between;
   border-bottom: black 2px solid;
-  background: white;
+  transition: ease-out 0.5s;
 }
 body .desktop .nav .left {
   float: left;
   display: flex;
   flex-direction: row;
-}
-body .desktop .nav .center {
-  display: flex;
-  flex-direction: row;
-  float: right;
-  width: 100%;
-  overflow: none;
-}
-body .desktop .nav .center ::-webkit-scrollbar {
-  width: 0;
-  background: transparent;
-}
-body .desktop .nav .center .tab {
-  margin: 3px 10px 5px 10px;
-  padding: 0px 2px 17px 2px;
-  outline: none;
-  border: 1px solid black;
 }
 body .desktop .nav .right {
   float: right;
@@ -60,22 +44,108 @@ body .desktop .nav .nav-item:hover {
   cursor: pointer;
   user-select: none;
 }
+body .desktop .nav .nav-item.darkmode:hover {
+  color: black;
+  background: white;
+  cursor: pointer;
+  user-select: none;
+}
+body .desktop .nav.darkmode {
+  background: black;
+  color: white;
+  border-bottom: white 2px solid;
+  transition: ease-in 0.5s;
+}
+body .desktop .center {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  float: right;
+  width: 1.5em;
+  height: calc(100vh - 4.5em);
+  overflow: scroll;
+  pointer-events: none;
+  top: 3em;
+}
+body .desktop .center ::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+body .desktop .center .tab {
+  display: block;
+  font-size: 14px;
+  line-height: 1em;
+  margin: 10px 8px 10px 0px;
+  padding: 10px 0px 10px 0px;
+  outline: none;
+  border: 1px solid black;
+  border-bottom-right-radius: 0.75em;
+  border-top-right-radius: 0.75em;
+  text-align: center;
+  pointer-events: visible;
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body .desktop .center .tab:hover {
+  margin: 10px 5px 10px 0px;
+  transition: margin ease 0.1s;
+}
+body .desktop .center .tab.darkmode {
+  border: 1px solid white;
+  background: black;
+  color: white;
+}
+body .desktop .desktopSpace {
+  height: calc(100vh - 1.5em);
+  width: 100vw;
+}
 body .desktop .rc-menu {
   position: absolute;
   list-style-type: none;
   padding: 0px;
   margin: 0px;
   border: solid black 1px;
-  z-index: 2;
+  border-radius: 0;
+  z-index: 6;
+  min-width: 0;
 }
 body .desktop .rc-menu .menu-item {
-  padding: 3px 20px 3px 3px;
+  padding: 5px 10px 5px 10px;
+  min-width: 0;
+  max-width: 80px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
 }
 body .desktop .rc-menu .menu-item:hover {
   color: white;
   background: black;
   cursor: pointer;
   user-select: none;
+  max-width: none;
+}
+body .desktop .rc-menu .submenu-item {
+  padding: 5px 10px 5px 10px;
+  min-width: 0;
+  max-width: 80px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+}
+body .desktop .rc-menu .submenu-item:hover {
+  color: white;
+  background: black;
+  cursor: pointer;
+  user-select: none;
+  max-width: none;
+}
+body .desktop .rc-menu .submenu-item:after {
+  content: "";
 }
 body .desktop .rc-menu .rightclick-item {
   padding: 3px 10px 3px 10px;
@@ -87,16 +157,20 @@ body .desktop .rc-menu .rightclick-item:hover {
   user-select: none;
 }
 body .desktop .rightclickscreen {
-  height: 96.5vh;
+  height: 100%;
   width: 100%;
+  left: 1px;
   position: absolute;
-  background: white;
+  background: transparent;
+  transition: ease-out 0.5s;
+}
+body .desktop .rightclickscreen.darkmode {
+  background: black;
+  transition: ease-in 0.5s;
 }
 body .desktop .folder {
-  min-height: 30px;
-  min-width: 30px;
-  width: 200px;
-  height: 200px;
+  width: 450px;
+  height: 600px;
   border: 2px black solid;
   text-align: center;
   position: absolute;
@@ -105,6 +179,7 @@ body .desktop .folder {
   outline: none;
   transition: opacity ease 0.5s;
   pointer-events: none;
+  overflow: visible;
 }
 body .desktop .folder .handle {
   width: 100%;
@@ -127,6 +202,8 @@ body .desktop .folder .handle .titleBox .title {
   margin: 0 37.5%;
   overflow: hidden;
   color: grey;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 body .desktop .folder .handle .titleBox .btns {
   display: flex;
@@ -197,71 +274,201 @@ body .desktop .folder .handle .lines .line {
   margin-top: 1px;
   border-top: grey 1px solid;
 }
+body .desktop .folder .folderSpace {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  height: calc(100% - 24px);
+  transition: ease-out 0.5s;
+  overflow: hidden;
+}
+body .desktop .folder .folderSpace iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+body .desktop .folder .folderSpace.darkmode {
+  background: black;
+  transition: ease-in 0.5s;
+}
+body .desktop .folder .folderSpace img {
+  width: 100%;
+}
+body .desktop .folder .folderSpace video {
+  width: 100%;
+}
 body .desktop .folder .resizers {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  z-index: 10;
+  transition: ease-out 0.5s;
 }
 body .desktop .folder .resizers .resizer {
   width: 1%;
   height: 1%;
   border: 3px solid transparent;
+  background: transparent;
   position: absolute;
 }
 body .desktop .folder .resizers .resizer.top-left {
   left: -5px;
   top: -5px;
   cursor: nwse-resize;
-  z-index: 1;
+  z-index: 2;
 }
 body .desktop .folder .resizers .resizer.top-right {
   right: -5px;
   top: -5px;
   cursor: nesw-resize;
-  z-index: 1;
+  z-index: 2;
 }
 body .desktop .folder .resizers .resizer.bottom-left {
   left: -5px;
   bottom: -5px;
   cursor: nesw-resize;
-  z-index: 1;
+  z-index: 2;
 }
 body .desktop .folder .resizers .resizer.bottom-right {
   right: -5px;
   bottom: -5px;
   cursor: nwse-resize;
-  z-index: 1;
+  z-index: 2;
 }
 body .desktop .folder .resizers .resizer.left {
   left: -5px;
   top: -3px;
   height: 100%;
   cursor: ew-resize;
+  z-index: 1;
 }
 body .desktop .folder .resizers .resizer.right {
   right: -5px;
   top: -3px;
   height: 100%;
   cursor: ew-resize;
+  z-index: 1;
 }
 body .desktop .folder .resizers .resizer.top {
-  left: -3px;
+  left: -1px;
   top: -5px;
   width: 100%;
   cursor: ns-resize;
+  z-index: 1;
 }
 body .desktop .folder .resizers .resizer.bottom {
-  left: -5px;
-  bottom: -5px;
+  left: -3px;
+  bottom: -7px;
   width: 100%;
   cursor: ns-resize;
+  z-index: 1;
+}
+body .desktop .folder .resizers.darkmode {
+  background: black;
+  transition: ease-in 0.5s;
+}
+body .desktop .folder.darkmode {
+  border: white 2px solid;
+}
+body .desktop .about {
+  min-width: 150px;
+  min-height: 200px;
+  border: 2px black solid;
+  text-align: center;
+  position: absolute;
+  z-index: 3;
+  outline: none;
+  transition: opacity ease 0.5s;
+  overflow: visible;
+}
+body .desktop .about .handle {
+  width: 100%;
+  height: 20px;
+  border-bottom: black 2px solid;
+  cursor: all-scroll;
+  position: absolute;
+}
+body .desktop .about .handle .titleBox {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  overflow: hidden;
+}
+body .desktop .about .handle .titleBox .title {
+  width: 50%;
+  position: absolute;
+  margin: 0 25%;
+  overflow: hidden;
+  color: grey;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+body .desktop .about .handle .titleBox .btns {
+  display: flex;
+  width: 100px;
+}
+body .desktop .about .handle .titleBox .btns .btn {
+  border: black 1px solid;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin: auto 5%;
+}
+body .desktop .about .handle .titleBox .btns .btn.red {
+  background: #FF605C;
+  cursor: pointer;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+body .desktop .about .handle .titleBox .btns .btn.red .close {
+  transform: scale(0.7) translate(-0.1px, -6.6px);
+  visibility: hidden;
+  user-select: none;
+  color: #1b1e23;
+}
+body .desktop .about .handle .titleBox .btns .btn.red:active {
+  background: #ff9f9d;
+}
+body .desktop .about .handle .lines {
+  width: 100%;
+  margin-top: 3.2px;
+  position: absolute;
+}
+body .desktop .about .handle .lines .line {
+  width: 100%;
+  margin-top: 1px;
+  border-top: grey 1px solid;
+}
+body .desktop .about .aboutInfo {
+  position: absolute;
+  top: 22px;
+  width: calc(100% - 20px);
+  text-align: left;
+  height: calc(100% - 44px);
+  font-size: 14px;
+  line-height: 18px;
+  padding: 10px;
+  transition: ease-out 0.5s;
+}
+body .desktop .about .aboutInfo.darkmode {
+  background: black;
+  color: white;
+}
+body .desktop .about.darkmode {
+  border: white 2px solid;
 }
 body .desktop .desk-item {
-  width: 50px;
-  height: 60px;
+  height: 5em;
+  width: 5em;
   position: absolute;
   text-align: center;
   outline: none;
+  z-index: 2;
 }
 body .desktop .desk-item .item-icon {
   width: 100%;
@@ -269,19 +476,49 @@ body .desktop .desk-item .item-icon {
 }
 body .desktop .desk-item .item-icon i {
   color: pink;
-  margin: 17px;
+  margin: 16px;
   transform: scale(3);
 }
 body .desktop .desk-item .item-name {
-  margin-top: 0.3em;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  word-wrap: break-word;
+  margin-top: -0.4em;
   font-size: 0.9em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body .desktop .desk-item .item-name.darkmode {
+  color: white;
+}
+body .desktop .desk-item .item-inputBox {
+  min-height: auto;
+  padding: 0;
+}
+body .desktop .desk-item .item-inputBox .item-textarea {
+  padding: 0;
+  width: 100%;
+  height: auto;
+  resize: none;
+  border: none;
+  outline: none;
+  border: 1px black solid;
+  font-size: 0.9em;
+  text-align: center;
+  line-height: 1.15;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  transform: translate(-1px, -6px);
+}
+body .desktop .desk-item .rightclickscreen {
+  top: 0px;
 }
 body .startup {
   font-size: 1vmin;
   width: 100vw;
   height: 100vh;
   position: absolute;
-  background: radial-gradient(circle at 50% 40%, #ff819c 30%, #360167 100%);
   z-index: 0;
   overflow: hidden;
 }
@@ -469,7 +706,7 @@ body .startup .computer .bottom {
   left: 1.5em;
   border-bottom-left-radius: 2em;
   border-bottom-right-radius: 2em;
-  box-shadow: 0px 3.5em 2em -3em;
+  box-shadow: 0px 4em 4em -1.5em;
   z-index: -1;
 }
 body .startup .computer .bottom:before {
@@ -477,7 +714,7 @@ body .startup .computer .bottom:before {
   width: 2.3%;
   height: 100%;
   position: absolute;
-  background: linear-gradient(90deg, #d5d5b4 0%, #8e8e78 100%);
+  background: linear-gradient(180deg, #2f2f28 0%, #767664 50%, #a5a58c 80%);
   bottom: 0.1em;
   left: 0em;
   border-bottom-left-radius: 2em;
@@ -487,7 +724,7 @@ body .startup .computer .bottom:after {
   width: 2.3%;
   height: 100%;
   position: absolute;
-  background: linear-gradient(180deg, #2f2f28 0%, #767664 38%, #a5a58c 100%);
+  background: linear-gradient(180deg, #2f2f28 0%, #767664 50%, #a5a58c 80%);
   bottom: 0.1em;
   right: 0em;
   border-bottom-right-radius: 2em;
@@ -521,6 +758,7 @@ body .startup .computer .bottom .power-btn:active i {
   text-shadow: 0px 0em 4px #ff3838;
 }
 body .startup .floor {
+  visibility: hidden;
   width: 200%;
   height: 80%;
   position: absolute;
@@ -547,6 +785,7 @@ body .startup .floor {
 }
 @keyframes flicker {
   0% {
+<<<<<<< HEAD
     opacity: 0.9226420956;
   }
   5% {
@@ -608,6 +847,88 @@ body .startup .floor {
   }
   100% {
     opacity: 0.1512432003;
+=======
+    opacity: 0.0617683533;
+  }
+  5% {
+    opacity: 0.4008180772;
+  }
+  10% {
+    opacity: 0.1561789879;
+  }
+  15% {
+    opacity: 0.6444048758;
+  }
+  20% {
+    opacity: 0.7509656265;
+  }
+  25% {
+    opacity: 0.2145009423;
+  }
+  30% {
+    opacity: 0.6551051519;
+  }
+  35% {
+    opacity: 0.2844430029;
+  }
+  40% {
+    opacity: 0.903452877;
+  }
+  45% {
+    opacity: 0.515649935;
+  }
+  50% {
+    opacity: 0.6571558469;
+  }
+  55% {
+    opacity: 0.9430926877;
+  }
+  60% {
+    opacity: 0.0556388308;
+  }
+  65% {
+    opacity: 0.9466861547;
+  }
+  70% {
+    opacity: 0.8153346986;
+  }
+  75% {
+    opacity: 0.1656366626;
+  }
+  80% {
+    opacity: 0.6068746306;
+  }
+  85% {
+    opacity: 0.9815143694;
+  }
+  90% {
+    opacity: 0.1178241364;
+  }
+  95% {
+    opacity: 0.0079760437;
+  }
+  100% {
+    opacity: 0.2649617642;
+  }
+}
+@keyframes borderStop {
+  0% {
+    border: 1px red solid;
+  }
+  25% {
+    transform: translate(-3px, -6px);
+    border: 1px red solid;
+  }
+  50% {
+    transform: translate(6px, -6px);
+    border: 1px red solid;
+  }
+  75% {
+    transform: translate(-6px, -6px);
+  }
+  100% {
+    transform: translate(3px -6px);
+>>>>>>> develop
   }
 }
 @keyframes turn-on {
@@ -689,6 +1010,24 @@ body .startup .floor {
 
 .tabAnimate-exited {
   opacity: 0;
+}
+
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 500ms ease-in;
 }
 
 /*# sourceMappingURL=App.css.map */
