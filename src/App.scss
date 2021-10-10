@@ -394,8 +394,8 @@ body{
                 transition: ease-out 0.5s;
                 @extend %colors;
                 .resizer{
-                    width: 1%;
-                    height: 1%;
+                    width: 1px;
+                    height: 1px;
                     border: 3px solid transparent;
                     background: transparent;
                     position: absolute;

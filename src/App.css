@@ -347,8 +347,8 @@ body .desktop .folder .resizers {
   transition: ease-out 0.5s;
 }
 body .desktop .folder .resizers .resizer {
-  width: 1%;
-  height: 1%;
+  width: 1px;
+  height: 1px;
   border: 3px solid transparent;
   background: transparent;
   position: absolute;
@@ -825,67 +825,67 @@ body .startup .floor {
 }
 @keyframes flicker {
   0% {
-    opacity: 0.7197115787;
+    opacity: 0.6275982358;
   }
   5% {
-    opacity: 0.1950951139;
+    opacity: 0.4215747788;
   }
   10% {
-    opacity: 0.8321197465;
+    opacity: 0.0239323142;
   }
   15% {
-    opacity: 0.2453192297;
+    opacity: 0.4989831533;
   }
   20% {
-    opacity: 0.2785619109;
+    opacity: 0.800879801;
   }
   25% {
-    opacity: 0.6032402385;
+    opacity: 0.6884094488;
   }
   30% {
-    opacity: 0.9788938946;
+    opacity: 0.9689640427;
   }
   35% {
-    opacity: 0.4900783438;
+    opacity: 0.6374444864;
   }
   40% {
-    opacity: 0.3265322244;
+    opacity: 0.5377262619;
   }
   45% {
-    opacity: 0.6600932507;
+    opacity: 0.192047132;
   }
   50% {
-    opacity: 0.4242903702;
+    opacity: 0.2710415115;
   }
   55% {
-    opacity: 0.767438531;
+    opacity: 0.6400431206;
   }
   60% {
-    opacity: 0.8929002641;
+    opacity: 0.6345588289;
   }
   65% {
-    opacity: 0.496714875;
+    opacity: 0.2694309081;
   }
   70% {
-    opacity: 0.1532431527;
+    opacity: 0.0571358093;
   }
   75% {
-    opacity: 0.0958700481;
+    opacity: 0.1180336869;
   }
   80% {
-    opacity: 0.042858387;
+    opacity: 0.4892576251;
   }
   85% {
-    opacity: 0.2235194646;
+    opacity: 0.8138581157;
   }
   90% {
-    opacity: 0.3405817025;
+    opacity: 0.752125672;
   }
   95% {
-    opacity: 0.9523494978;
+    opacity: 0.2179495278;
   }
   100% {
-    opacity: 0.4727047523;
+    opacity: 0.8855691058;
   }
 }
 @keyframes borderStop {
