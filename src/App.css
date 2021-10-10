@@ -54,12 +54,14 @@ body .desktop .nav .nav-item.darkmode:hover {
 }
 body .desktop .nav .nav-item .searchBox {
   width: 80px;
+  border: none;
+  resize: none;
   top: 3.5px;
   position: absolute;
   background: transparent;
   color: black;
   border: none;
-  overflow: scroll;
+  overflow: hidden;
   white-space: nowrap;
   outline: none;
 }
@@ -823,67 +825,67 @@ body .startup .floor {
 }
 @keyframes flicker {
   0% {
-    opacity: 0.8575704;
+    opacity: 0.7197115787;
   }
   5% {
-    opacity: 0.4863211445;
+    opacity: 0.1950951139;
   }
   10% {
-    opacity: 0.047470292;
+    opacity: 0.8321197465;
   }
   15% {
-    opacity: 0.9887246551;
+    opacity: 0.2453192297;
   }
   20% {
-    opacity: 0.1183158082;
+    opacity: 0.2785619109;
   }
   25% {
-    opacity: 0.6454630226;
+    opacity: 0.6032402385;
   }
   30% {
-    opacity: 0.6167862595;
+    opacity: 0.9788938946;
   }
   35% {
-    opacity: 0.8411672039;
+    opacity: 0.4900783438;
   }
   40% {
-    opacity: 0.6689878562;
+    opacity: 0.3265322244;
   }
   45% {
-    opacity: 0.2936092872;
+    opacity: 0.6600932507;
   }
   50% {
-    opacity: 0.4155394482;
+    opacity: 0.4242903702;
   }
   55% {
-    opacity: 0.5972399384;
+    opacity: 0.767438531;
   }
   60% {
-    opacity: 0.4925163447;
+    opacity: 0.8929002641;
   }
   65% {
-    opacity: 0.2978690465;
+    opacity: 0.496714875;
   }
   70% {
-    opacity: 0.3665569348;
+    opacity: 0.1532431527;
   }
   75% {
-    opacity: 0.3287420598;
+    opacity: 0.0958700481;
   }
   80% {
-    opacity: 0.6489880904;
+    opacity: 0.042858387;
   }
   85% {
-    opacity: 0.6794870347;
+    opacity: 0.2235194646;
   }
   90% {
-    opacity: 0.0346003785;
+    opacity: 0.3405817025;
   }
   95% {
-    opacity: 0.282760373;
+    opacity: 0.9523494978;
   }
   100% {
-    opacity: 0.6090094872;
+    opacity: 0.4727047523;
   }
 }
 @keyframes borderStop {

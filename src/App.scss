@@ -63,12 +63,14 @@ body{
                 }
                 .searchBox{
                     width: 80px;
+                    border: none;
+                    resize: none;
                     top: 3.5px;
                     position: absolute;
                     background: transparent;
                     color: black;
                     border:none;
-                    overflow: scroll;
+                    overflow: hidden;
                     white-space: nowrap;
                     outline: none;
                     &:hover{
