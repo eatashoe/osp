@@ -55,9 +55,33 @@ body{
                 padding: 5px 10px 5px 10px;
                 outline: none;
                 white-space: nowrap;
+                transition: width 0.5s;
+                width: auto;
                 @include hover;
                 &.darkmode{
                     @include hoverD();
+                }
+                .searchBox{
+                    width: 80px;
+                    top: 3.5px;
+                    position: absolute;
+                    background: transparent;
+                    color: black;
+                    border:none;
+                    overflow: scroll;
+                    white-space: nowrap;
+                    outline: none;
+                    &:hover{
+                        caret-color: white;
+                        color: white;
+                    }
+                    &.darkmode{
+                        color: white;
+                        &:hover{
+                            caret-color: black;
+                            color: black;
+                        }
+                    }
                 }
             }
             &.darkmode{
@@ -154,8 +178,8 @@ body{
             @extend %colors;
             .menu-item{
                 padding: 5px 10px 5px 10px;
-                min-width: 0;
-                max-width: 80px;
+                min-width: 100px;
+                max-width: 100px;
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
@@ -168,10 +192,25 @@ body{
                     max-width: none;
                 }
             }
+            .result{
+                padding: 5px 10px 5px 10px;
+                min-width: 100px;
+                max-width: 100px;
+                // white-space: nowrap;
+                // text-overflow: ellipsis;
+                overflow: hidden;
+                display: block;
+                &:hover{
+                    color:white;
+                    background: black;
+                    cursor:pointer;
+                    user-select: none;
+                }
+            }
             .submenu-item{
                 padding: 5px 10px 5px 10px;
                 min-width: 0;
-                max-width: 80px;
+                max-width: 100px;
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;

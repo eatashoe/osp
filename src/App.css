@@ -37,6 +37,8 @@ body .desktop .nav .nav-item {
   padding: 5px 10px 5px 10px;
   outline: none;
   white-space: nowrap;
+  transition: width 0.5s;
+  width: auto;
 }
 body .desktop .nav .nav-item:hover {
   color: white;
@@ -49,6 +51,28 @@ body .desktop .nav .nav-item.darkmode:hover {
   background: white;
   cursor: pointer;
   user-select: none;
+}
+body .desktop .nav .nav-item .searchBox {
+  width: 80px;
+  top: 3.5px;
+  position: absolute;
+  background: transparent;
+  color: black;
+  border: none;
+  overflow: scroll;
+  white-space: nowrap;
+  outline: none;
+}
+body .desktop .nav .nav-item .searchBox:hover {
+  caret-color: white;
+  color: white;
+}
+body .desktop .nav .nav-item .searchBox.darkmode {
+  color: white;
+}
+body .desktop .nav .nav-item .searchBox.darkmode:hover {
+  caret-color: black;
+  color: black;
 }
 body .desktop .nav.darkmode {
   background: black;
@@ -115,8 +139,8 @@ body .desktop .rc-menu {
 }
 body .desktop .rc-menu .menu-item {
   padding: 5px 10px 5px 10px;
-  min-width: 0;
-  max-width: 80px;
+  min-width: 100px;
+  max-width: 100px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -129,10 +153,23 @@ body .desktop .rc-menu .menu-item:hover {
   user-select: none;
   max-width: none;
 }
+body .desktop .rc-menu .result {
+  padding: 5px 10px 5px 10px;
+  min-width: 100px;
+  max-width: 100px;
+  overflow: hidden;
+  display: block;
+}
+body .desktop .rc-menu .result:hover {
+  color: white;
+  background: black;
+  cursor: pointer;
+  user-select: none;
+}
 body .desktop .rc-menu .submenu-item {
   padding: 5px 10px 5px 10px;
   min-width: 0;
-  max-width: 80px;
+  max-width: 100px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -786,67 +823,67 @@ body .startup .floor {
 }
 @keyframes flicker {
   0% {
-    opacity: 0.6337310301;
+    opacity: 0.8575704;
   }
   5% {
-    opacity: 0.5462515341;
+    opacity: 0.4863211445;
   }
   10% {
-    opacity: 0.9477966853;
+    opacity: 0.047470292;
   }
   15% {
-    opacity: 0.9439333122;
+    opacity: 0.9887246551;
   }
   20% {
-    opacity: 0.812765339;
+    opacity: 0.1183158082;
   }
   25% {
-    opacity: 0.7271714935;
+    opacity: 0.6454630226;
   }
   30% {
-    opacity: 0.3462084767;
+    opacity: 0.6167862595;
   }
   35% {
-    opacity: 0.7370759687;
+    opacity: 0.8411672039;
   }
   40% {
-    opacity: 0.7770168944;
+    opacity: 0.6689878562;
   }
   45% {
-    opacity: 0.4457205572;
+    opacity: 0.2936092872;
   }
   50% {
-    opacity: 0.8256419188;
+    opacity: 0.4155394482;
   }
   55% {
-    opacity: 0.3414870455;
+    opacity: 0.5972399384;
   }
   60% {
-    opacity: 0.0678504209;
+    opacity: 0.4925163447;
   }
   65% {
-    opacity: 0.1322076805;
+    opacity: 0.2978690465;
   }
   70% {
-    opacity: 0.3852229501;
+    opacity: 0.3665569348;
   }
   75% {
-    opacity: 0.1181409794;
+    opacity: 0.3287420598;
   }
   80% {
-    opacity: 0.6934857132;
+    opacity: 0.6489880904;
   }
   85% {
-    opacity: 0.1239369735;
+    opacity: 0.6794870347;
   }
   90% {
-    opacity: 0.658625725;
+    opacity: 0.0346003785;
   }
   95% {
-    opacity: 0.145758697;
+    opacity: 0.282760373;
   }
   100% {
-    opacity: 0.8301964222;
+    opacity: 0.6090094872;
   }
 }
 @keyframes borderStop {

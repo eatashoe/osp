@@ -6,6 +6,8 @@ import {Menu, MenuItem} from "@szhsin/react-menu";
 import '@szhsin/react-menu/dist/index.css';
 import {useDarkMode} from "./GlobalStates";
 import Directory from "./Directory";
+import SearchBar from "./SearchBar";
+
 import wgLogo from "../media/WG.svg";
 import chalk from "../media/Chalk.svg";
 import beyond from "../media/Beyond.svg";
@@ -213,9 +215,10 @@ const Desktop = ({desktop, turnOn}) => {
                     </div>
                 </div>
                 <div className="right">
-                    <li className={darkMode.get() ? "nav-item darkmode" : "nav-item"}>
+                    {/* <li className={darkMode.get() ? "nav-item darkmode" : "nav-item"}>
                         <i className="fas fa-search"></i><span>Search</span>
-                    </li>
+                    </li> */}
+                    <SearchBar></SearchBar>
                     <li className={darkMode.get() ? "nav-item darkmode" : "nav-item"}>
                         <Clock />
                     </li>
